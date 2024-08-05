@@ -1,1 +1,3 @@
 # spdadesAlwaysWinCardGame
+
+#first commit pushed
