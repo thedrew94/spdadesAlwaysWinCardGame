@@ -1,0 +1,228 @@
+/* IMPORTS */
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Noto+Sans+Display:ital,wght@0,100..900;1,100..900&display=swap");
+
+/* CUSTOM DEFAULT STYLES VARIABLES */
+:root {
+  /* COLOR PALETTE */
+  --color-custom1: #ffffff;
+  --color-custom2: #867c7c;
+  --color-custom3: #4b1c1f;
+  --color-custom4: #4b1c1f;
+  --color-custom5: #4b1c1f;
+  --bg-custom: url("./src/assets/forher_bg.jpg");
+
+  /* TYPOGRAPHY */
+  /* --font-size-h1: 10px;
+  --font-size-h2: 10px;
+  --font-size-h3: 10px;
+  --font-size-h4: 10px;
+  --font-size-h5: 10px;
+  --font-size-h6: 10px;
+  --font-size-p: 10px; */
+}
+
+.lexend-font {
+  font-family: "Lexend", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: normal;
+}
+
+/* SET THE STYLES BASED ON THE USER SYSTEM PREFERENCES FOR DARK THEME OR LIGHT THEME */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --decor-color-1: green;
+  }
+
+  /* IMPLEMENT THE FOLLOWING IF WE WANT TO ALLOW THE USER TO TOGGLE MANUALLY LIGHT DARK MODE */
+  /* :root:not(.light) {
+    This will apply if no class is set OR if 'dark' class is there
+    --decor-color-1: green;
+    Other dark theme variables
+  } */
+}
+
+/* if light will use already the above :root variables */
+@media (prefers-color-scheme: light) {
+  /* :root {
+  } */
+}
+
+/* CUSTOM STYLES SETTINGS */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
+/* SETTING SOME DEFAULT STYLES */
+
+html {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  font-size: 62.5%;
+  font-family: "Noto Sans Display", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-optical-sizing: auto;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #fff;
+}
+
+body {
+  background-color: #fff;
+}
+
+button,
+fieldset,
+a {
+  background: none;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  text-decoration: none;
+  text-align: inherit;
+  color: inherit;
+}
+
+button,
+a {
+  cursor: pointer;
+}
+
+ul,
+ol,
+li {
+  list-style-type: none;
+}
+
+img[src=""],
+img:not([src]) {
+  background-image: url("/fallback-avatar.png");
+  background-size: cover;
+  background-position: center;
+}
+
+/* HOVER CLASSES RENDERED ONLY FOR DEVICES CAPABLE OF SUPPORTING IT */
+/* (hover: hover) checks if the primary input mechanism of the device supports hover functionality. This typically applies to devices with a mouse or trackpad. */
+/* (pointer: fine) checks if the primary pointing device is precise, which would be true for a mouse or stylus, but not for a finger on a touch screen. */
+@media (hover: hover) and (pointer: fine) {
+  /* .btn_type_main:hover {
+    background-color: var(--decor-color-1);
+  } */
+
+  .workouts_page ul li:hover {
+    background-color: rgb(35, 49, 77, 0.25);
+  }
+}
+
+/* /////////////////////////////// */
+/* UTILITY CLASSES START */
+/* /////////////////////////////// */
+
+.h1 {
+  font-size: 3rem;
+}
+
+.h2 {
+  font-size: 2.2rem;
+  font-weight: normal;
+}
+
+.h2_bold {
+  font-size: 2.2rem;
+  font-weight: bold;
+}
+
+.h3 {
+  font-size: 2rem;
+  font-weight: normal;
+}
+
+.h3_bold {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.h4 {
+  font-size: 1.8rem;
+  font-weight: normal;
+}
+
+.h4_bold {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.h5 {
+  font-size: 1.6rem;
+  font-weight: normal;
+}
+
+.h5_bold {
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+.h6 {
+  font-size: 1.5rem;
+  font-weight: normal;
+}
+
+.h6_bold {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.p {
+  font-size: 1.35rem;
+  font-weight: normal;
+}
+
+.p_bold {
+  font-size: 1.35rem;
+  font-weight: bold;
+}
+
+.flex_row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.flex_col {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex_custom_1 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+}
+
+.flex_gap_sm {
+  gap: 10px;
+}
+
+.flex_gap_md {
+  gap: 20px;
+}
+
+.flex_gap_xl {
+  gap: 30px;
+}
+
+/* /////////////////////////////// */
+/* UTILITY CLASSES END */
+/* /////////////////////////////// */
