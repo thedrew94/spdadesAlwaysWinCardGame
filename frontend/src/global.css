@@ -4,12 +4,8 @@
 /* CUSTOM DEFAULT STYLES VARIABLES */
 :root {
   /* COLOR PALETTE */
-  --color-custom1: #ffffff;
-  --color-custom2: #867c7c;
-  --color-custom3: #4b1c1f;
-  --color-custom4: #4b1c1f;
-  --color-custom5: #4b1c1f;
-  --bg-custom: url("./src/assets/forher_bg.jpg");
+  --color-custom1: #f1dabb;
+  --color-custom2: #3f200b;
 
   /* TYPOGRAPHY */
   /* --font-size-h1: 10px;
@@ -222,13 +218,20 @@ img:not([src]) {
 /* UTILITY CLASSES END */
 /* /////////////////////////////// */
 
+/* /////////////////////////////// */
+/* HOMEPAGE STYLES -- start -- */
+/* /////////////////////////////// */
+
 .homepage {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 300px;
+  gap: 100px;
+  width: 100%;
+  min-height: 100vh;
   height: 100vh;
+  padding: 100px;
 }
 
 .homepage_title {
@@ -236,13 +239,13 @@ img:not([src]) {
   display: flex;
   width: fit-content;
   margin: 0 auto;
-  padding: 50px;
   -webkit-background-clip: text;
   -webkit-text-stroke: 4px #3f200b;
   background: linear-gradient(to bottom, #f3e08a, #e5a856);
   background-clip: text;
   font-size: 8rem;
   line-height: 6rem;
+  white-space: nowrap;
   color: transparent;
   user-select: none;
 }
@@ -252,19 +255,25 @@ img:not([src]) {
   line-height: 12rem;
 }
 
-.title_right {
+.title_side_letter {
   display: flex;
   flex-direction: column;
 }
 
 .homepage_title img {
   position: absolute;
-  top: -20%;
-  left: 200px;
   z-index: -1;
+  top: -80%;
+  left: 150px;
+  min-width: 256px;
+  width: 256px;
+  max-width: 256px;
+  min-height: 256px;
+  height: 256px;
+  max-height: 256px;
 }
 
-.homepage_game_controls {
+.homepage_game_btns {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -276,6 +285,7 @@ img:not([src]) {
   align-items: center;
   gap: 20px;
   min-width: 300px;
+  max-width: 300px;
   margin: 0 auto;
   padding: 15px 30px;
   /* background: linear-gradient(45deg, #8b4513, #a0522d); */
@@ -290,15 +300,10 @@ img:not([src]) {
   text-align: center;
   letter-spacing: 0.15em;
   color: #f1dabb;
-  overflow: hidden;
   cursor: pointer;
+  overflow: hidden;
   transition: all 0.3s ease;
 }
-
-/* .game_btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), inset 0 -5px 10px rgba(0, 0, 0, 0.2);
-} */
 
 .game_btn:active {
   transform: scale(0.95);
@@ -313,6 +318,15 @@ img:not([src]) {
   text-align: center;
   color: #8b4513;
 }
+
+/* /////////////////////////////// */
+/* HOMEPAGE STYLES -- end -- */
+/* /////////////////////////////// */
+
+/* .game_btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), inset 0 -5px 10px rgba(0, 0, 0, 0.2);
+} */
 
 .keycap_btn {
   position: relative;

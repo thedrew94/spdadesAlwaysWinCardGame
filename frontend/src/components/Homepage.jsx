@@ -5,7 +5,7 @@ export default function Homepage() {
     <div className="homepage">
       <div className="homepage_title">
         <span className="title_main_letter">S</span>
-        <div className="title_right">
+        <div className="title_side_letter">
           <span>pades</span>
           <span>always wins</span>
         </div>
@@ -14,7 +14,7 @@ export default function Homepage() {
       {/* <button className="keycap_btn">
                   <span className="keycap_btn_letter">OK</span>
                 </button> */}
-      <div className="homepage_game_controls">
+      <div className="homepage_game_btns">
         <button className="game_btn">
           PLAY{svgSelector({ svgName: "play", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
         </button>
