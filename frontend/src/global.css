@@ -218,6 +218,33 @@ img:not([src]) {
 /* UTILITY CLASSES END */
 /* /////////////////////////////// */
 
+.loading_page {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.loading_text,
+.loading_dot {
+  position: relative;
+  display: flex;
+  width: fit-content;
+  -webkit-background-clip: text;
+  -webkit-text-stroke: 4px #3f200b;
+  background: linear-gradient(to bottom, #f3e08a, #e5a856);
+  background-clip: text;
+  font-size: 8rem;
+  line-height: 6rem;
+  white-space: nowrap;
+  color: transparent;
+  user-select: none;
+  transform-origin: center;
+  animation: renderInBtn 0.2s ease-in forwards;
+}
+
 /* /////////////////////////////// */
 /* HOMEPAGE STYLES -- start -- */
 /* /////////////////////////////// */
@@ -273,19 +300,34 @@ img:not([src]) {
   max-height: 256px;
 }
 
+.homepage_game_home {
+  max-width: 300px;
+}
+
 .homepage_game_btns {
+  /* display: flex;
+  flex-direction: column;
+  gap: 20px; */
+  min-height: 393px;
+}
+
+.game_btns_home,
+.game_btns_start,
+.game_btns_new {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  min-height: 247px;
 }
 
 .game_btn {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
   min-width: 300px;
   max-width: 300px;
+  min-height: 69px;
   margin: 0 auto;
   padding: 15px 30px;
   /* background: linear-gradient(45deg, #8b4513, #a0522d); */
@@ -297,16 +339,31 @@ img:not([src]) {
   font-family: "Jua", sans-serif;
   font-weight: bolder;
   font-size: 2.4rem;
-  text-align: center;
+  text-align: left;
   letter-spacing: 0.15em;
   color: #f1dabb;
+  user-select: none;
   cursor: pointer;
   overflow: hidden;
-  transition: all 0.3s ease;
+  animation: renderInBtn 0.2s ease-in forwards;
+}
+
+@keyframes renderInBtn {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.game_btn svg {
+  width: 28px;
+  height: 28px;
 }
 
 .game_btn:active {
-  transform: scale(0.95);
+  transform: scale(0.95) !important;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3), inset 0 -3px 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -317,6 +374,135 @@ img:not([src]) {
   font-size: 1.8rem;
   text-align: center;
   color: #8b4513;
+}
+
+.input_username {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0px;
+  min-width: 300px;
+  max-width: 300px;
+  min-height: 69px;
+  max-height: 69px;
+  margin: 0 auto;
+  padding: 0 30px 0 0;
+  background: radial-gradient(circle, #f1dabb 0%, #ecd6b8 100%);
+  border: 3px solid #3f200b;
+  border-bottom: 6px solid #3f200b;
+  border-radius: 10px;
+  /* outline: 6px solid green; */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), inset 0 -5px 10px rgba(0, 0, 0, 0.2);
+  font-family: "Jua", sans-serif;
+  font-weight: bolder;
+  font-size: 2rem;
+  text-align: left;
+  letter-spacing: 0.12em;
+  color: #a0522d;
+  user-select: none;
+  animation: renderInBtn 0.2s ease-in forwards;
+}
+
+.input_username svg {
+  min-width: 28px;
+  width: 28px;
+  height: 28px;
+}
+
+.input_text_default {
+  width: 100%;
+  height: 100%;
+  padding: 15px 0 15px 30px;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.input_players {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0px;
+  min-width: 300px;
+  max-width: 300px;
+  min-height: 69px;
+  max-height: 69px;
+  margin: 0 auto;
+  padding: 15px 30px;
+  background: radial-gradient(circle, #8b4513 0%, #a0522d 100%);
+  border: 3px solid #3f200b;
+  border-bottom: 6px solid #3f200b;
+  border-radius: 10px;
+  /* outline: 6px solid green; */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), inset 0 -5px 10px rgba(0, 0, 0, 0.2);
+  font-family: "Jua", sans-serif;
+  font-weight: bolder;
+  font-size: 2rem;
+  text-align: left;
+  letter-spacing: 0.12em;
+  color: #f1dabb;
+  user-select: none;
+  animation: renderInBtn 0.2s ease-in forwards;
+}
+
+.input_players button:first-child svg {
+  transform: rotate(90deg);
+}
+
+.input_players button:last-child svg {
+  transform: rotate(-90deg);
+}
+
+.avatar_selection_swiper {
+  position: relative;
+  width: 100%;
+  min-height: 70px;
+  height: 70px;
+  animation: renderInBtn 0.2s ease-in forwards;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle, #f1dabb 0%, #ecd6b8 100%);
+  border: 3px solid #3f200b;
+  border-bottom: 6px solid #3f200b;
+  border-radius: 6px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), inset 0 -5px 10px rgba(0, 0, 0, 0.2);
+  user-select: none;
+  cursor: pointer;
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: all 0.25s;
+}
+
+.avatar_selected {
+  background: radial-gradient(circle, #8b4513 0%, #a0522d 100%);
+  transition: all 0.25s;
+}
+
+.avatar_container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
 }
 
 /* /////////////////////////////// */
@@ -394,3 +580,65 @@ img:not([src]) {
       
     https://uiverse.io/20essentials/purple-rattlesnake-49
     */
+
+/* Tablets (portrait and landscape, typically 768px to 1024px) */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  body {
+  }
+
+  .homepage {
+    gap: 150px;
+  }
+
+  .homepage_title {
+    font-size: 6rem;
+    line-height: 5rem;
+  }
+
+  .title_main_letter {
+    font-size: 13rem;
+    line-height: 10rem;
+  }
+
+  .homepage_title img {
+    --img-size: 180px;
+    top: -60%;
+    left: 125px;
+    min-width: var(--img-size);
+    width: var(--img-size);
+    max-width: var(--img-size);
+    min-height: var(--img-size);
+    height: var(--img-size);
+    max-height: var(--img-size);
+  }
+
+  .homepage_game_btns {
+    gap: 20px;
+  }
+
+  .game_btn {
+    font-size: 2rem;
+  }
+
+  .game_btn svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .game_link {
+    margin: 30px auto;
+    font-size: 1.6rem;
+  }
+}
+
+/* Phones (typically up to 767px) */
+@media screen and (max-width: 767px) {
+  /* Your phone-specific styles here */
+  body {
+    font-size: 14px;
+  }
+  .container {
+    width: 95%;
+    margin: 0 auto;
+  }
+}
