@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { svgSelector } from "../utils/svgSelector";
-import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { svgSelector } from "../utils/svgSelector";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/free-mode";
@@ -15,6 +15,8 @@ import avatar5 from "../assets/avatar_5.png";
 import avatar6 from "../assets/avatar_6.png";
 import avatar7 from "../assets/avatar_7.png";
 import avatar8 from "../assets/avatar_8.png";
+import LanguageSelector from "./LanguageSelector";
+import Loader from "./Loader";
 
 export default function Homepage() {
   const [page, setPage] = useState(1);
@@ -23,6 +25,7 @@ export default function Homepage() {
 
   return (
     <div className="homepage">
+      <LanguageSelector />
       <div className="homepage_title">
         <span className="title_main_letter">S</span>
         <div className="title_side_letter">
@@ -43,7 +46,7 @@ export default function Homepage() {
             <button className="game_btn">
               RULES{svgSelector({ svgName: "rules", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
             </button>
-            <button className="game_btn">
+            <button className="game_btn" onClick={() => setPage(6)}>
               SUPPORT{svgSelector({ svgName: "love", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
             </button>
           </div>
@@ -54,11 +57,11 @@ export default function Homepage() {
             <button className="game_btn" onClick={() => setPage(3)}>
               NEW GAME{svgSelector({ svgName: "play", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
             </button>
-            <button className="game_btn">
-              JOIN GAME{svgSelector({ svgName: "play", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
+            <button className="game_btn" onClick={() => setPage(5)}>
+              JOIN GAME{svgSelector({ svgName: "join", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
             </button>
             <button className="game_btn" onClick={() => setPage(1)}>
-              GO BACK{svgSelector({ svgName: "play", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
+              GO BACK{svgSelector({ svgName: "back", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
             </button>
           </div>
         )}
@@ -74,7 +77,17 @@ export default function Homepage() {
                 autoComplete="off"
                 className="input_text_default"
               />
-              {svgSelector({ svgName: "pen", svgWidth: "28px", svgHeight: "28px", svgFill: "#8b4513" })}
+              {svgSelector({ svgName: "pen", svgWidth: "28px", svgHeight: "28px", svgFill: "#3f200b" })}
+            </div>
+
+            <div className="input_players">
+              <button onClick={() => setPlayersCount((curr) => (curr <= 2 ? curr : curr - 1))}>
+                {svgSelector({ svgName: "play", svgWidth: "28px", svgHeight: "28px", svgFill: "#3f200b" })}
+              </button>
+              <span>{playersCount} players</span>
+              <button onClick={() => setPlayersCount((curr) => (curr >= 8 ? curr : curr + 1))}>
+                {svgSelector({ svgName: "play", svgWidth: "28px", svgHeight: "28px", svgFill: "#3f200b" })}
+              </button>
             </div>
             <div className="avatar_selection_swiper">
               <Swiper
@@ -156,31 +169,77 @@ export default function Homepage() {
                     <img src={avatar8} alt="" width="48px" height="48px" draggable="false" />
                   </div>
                 </SwiperSlide>
-                <SwiperSlide
-                  onClick={() => setSelectedAvatar(1)}
-                  className={`${selectedAvatar === 1 && "avatar_selected"}`}
-                >
-                  <div className="avatar_container">
-                    <img src={avatar1} alt="" width="48px" height="48px" draggable="false" />
-                  </div>
-                </SwiperSlide>
               </Swiper>
             </div>
 
-            <div className="input_players">
-              <button onClick={() => setPlayersCount((curr) => (curr <= 2 ? curr : curr - 1))}>
-                {svgSelector({ svgName: "play", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
-              </button>
-              <span>{playersCount} players</span>
-              <button onClick={() => setPlayersCount((curr) => (curr >= 8 ? curr : curr + 1))}>
-                {svgSelector({ svgName: "play", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
-              </button>
-            </div>
-            <button className="game_btn" onClick={() => setPage(2)}>
+            <button className="game_btn" onClick={() => setPage(4)}>
               START GAME{svgSelector({ svgName: "play", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
             </button>
             <button className="game_btn" onClick={() => setPage(2)}>
-              GO BACK{svgSelector({ svgName: "play", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
+              GO BACK{svgSelector({ svgName: "back", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
+            </button>
+          </div>
+        )}
+
+        {page === 4 && (
+          <Loader isLoading={true}>
+            <div className="game_btns_loading_new">
+              <div className="game_code_container">
+                <h6 className="game_code">HKJSA123</h6>
+                <button>
+                  {svgSelector({ svgName: "copy", svgWidth: "28px", svgHeight: "28px", svgFill: "#3f200b" })}
+                </button>
+              </div>
+              <h6 className="game_code_text">
+                This is your game room code. <br />
+                Share the code with your friends to play together or wait for other people to join the room.
+              </h6>
+              <button className="game_btn" onClick={() => setPage(1)}>
+                GO BACK{svgSelector({ svgName: "back", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
+              </button>
+            </div>
+          </Loader>
+        )}
+
+        {page === 5 && (
+          <div className="game_btns_join">
+            <ul className="available_games_join">
+              <li className="available_romm_li">
+                <h6>HKJSA123</h6>
+                <span>1 / 4</span>
+                <button>
+                  {svgSelector({ svgName: "enter", svgWidth: "28px", svgHeight: "28px", svgFill: "#3f200b" })}
+                </button>
+              </li>
+              <li className="available_romm_li">
+                <h6>4324SADA</h6>
+                <span>1 / 4</span>
+                <button>
+                  {svgSelector({ svgName: "enter", svgWidth: "28px", svgHeight: "28px", svgFill: "#3f200b" })}
+                </button>
+              </li>
+            </ul>
+
+            <button className="game_btn" onClick={() => setPage(2)}>
+              GO BACK{svgSelector({ svgName: "back", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
+            </button>
+          </div>
+        )}
+
+        {page === 6 && (
+          <div className="game_btns_home">
+            <button className="game_btn" onClick={() => setPage(1)}>
+              BUYME A COFFEE
+              {svgSelector({ svgName: "coffee", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
+            </button>
+            <button className="game_btn">
+              PAYPAL{svgSelector({ svgName: "rules", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
+            </button>
+            <button className="game_btn">
+              FOLLOW ME{svgSelector({ svgName: "linkedin", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
+            </button>
+            <button className="game_btn" onClick={() => setPage(1)}>
+              GO BACK{svgSelector({ svgName: "back", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
             </button>
           </div>
         )}

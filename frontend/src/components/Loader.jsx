@@ -1,11 +1,14 @@
-export default function Loader({ isLoading = false }) {
+export default function Loader({ isLoading = false, children }) {
   if (!isLoading) return;
   return (
     <div className="loading_page">
-      <h6 className="loading_text">Loading</h6>
-      <span className="loading_dot">.</span>
-      <span className="loading_dot">.</span>
-      <span className="loading_dot">.</span>
+      <div className="loding_main">
+        <h6 className="loading_text">Loading</h6>
+        <span className="loading_dot dot1">.</span>
+        <span className="loading_dot dot2">.</span>
+        <span className="loading_dot dot3">.</span>
+      </div>
+      <div className="loading_body">{children}</div>
     </div>
   );
 }

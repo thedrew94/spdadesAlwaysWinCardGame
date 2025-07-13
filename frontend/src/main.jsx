@@ -6,6 +6,7 @@ import Loader from "./components/Loader";
 import "./global.css";
 
 const Homepage = lazy(() => import("./components/Homepage"));
+const GameplayPage = lazy(() => import("./components/GameplayPage"));
 
 createRoot(document.getElementById("root")).render(
   // GLOBAL STORAGE | TO STORE DATA THAT CAN BE ACCESSIBLE FROM EVERY COMPONENT
@@ -18,6 +19,14 @@ createRoot(document.getElementById("root")).render(
           element={
             <Suspense fallback={<Loader isLoading={true} />}>
               <Homepage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/game"
+          element={
+            <Suspense fallback={<Loader isLoading={true} />}>
+              <GameplayPage />
             </Suspense>
           }
         />
