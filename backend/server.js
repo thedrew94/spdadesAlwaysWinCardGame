@@ -8,6 +8,9 @@ const { Server } = require("socket.io");
 // Environment arguments
 const PORT = process.env.PORT || 5175;
 
+// Routes imports
+const globalRoutes = require("./routes/globalRoutes");
+
 // Initialize Express app
 const app = express();
 
@@ -42,6 +45,9 @@ app.use(express.static("public")); // Serve static files from 'public' folder
 app.get("/", (req, res) => {
   res.send("<h1>Hello World</h1>");
 });
+
+// Mount the routes
+app.use("/api", globalRoutes);
 
 // // Example API route with Socket.IO integration
 // app.post("/api/message", (req, res) => {
