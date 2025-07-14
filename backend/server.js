@@ -1,40 +1,72 @@
 require("dotenv").config();
+const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const express = require("express");
+const http = require("http"); // Required for Socket.IO
+const { Server } = require("socket.io");
+
+// Environment arguments
+const PORT = process.env.PORT || 5175;
+
+// Initialize Express app
 const app = express();
 
-app.use(cookieParser());
+// Create HTTP server for Socket.IO
+const server = http.createServer(app);
 
-// Middleware to enable CORS
+// Initialize Socket.IO with CORS configuration
+const io = new Server(server, {
+  cors: {
+    origin: ["http://localhost:5173", "http://localhost:5174"], // Match frontend origins
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true, // Allow cookies with Socket.IO
+  },
+});
+
+// Middleware setup
 app.use(
   cors({
-    // Allow requests from your frontend
-    origin: ["http://localhost:5173", "http://localhost:5174"],
+    origin: ["http://localhost:5173", "http://localhost:5174"], // Allow frontend origins
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    // Allowed headers
     allowedHeaders: ["Content-Type", "Authorization"],
-    // Allow cookies to be sent
-    credentials: true,
+    credentials: true, // Allow cookies
   })
 );
+app.use(cookieParser()); // Parse cookies
+app.use(express.json({ limit: "10mb" })); // Parse JSON bodies
+app.use(express.urlencoded({ limit: "10mb", extended: true })); // Parse URL-encoded bodies
+app.use(express.static("public")); // Serve static files from 'public' folder
 
-// Middleware to parse JSON bodies with a 10MB limit
-// requests that have Content-Type: application/json in their headers
-app.use(express.json({ limit: "10mb" }));
+// Sample route
+app.get("/", (req, res) => {
+  res.send("<h1>Hello World</h1>");
+});
 
-// Middleware to parse URL-encoded bodies (e.g., form data) with a 10MB limit
-// parses incoming requests with URL-encoded payloads, typically from HTML forms content-Type: application/x-www-form-urlencoded in their headers
-app.use(express.urlencoded({ limit: "10mb", extended: true }));
+// // Example API route with Socket.IO integration
+// app.post("/api/message", (req, res) => {
+//   const { message } = req.body;
+//   if (!message) {
+//     return res.status(400).json({ status: "fail", message: "Message is required" });
+//   }
+//   // Emit message to all connected clients via Socket.IO
+//   io.emit("newMessage", { message, timestamp: new Date().toISOString() });
+//   res.status(200).json({ status: "success", message: "Message sent" });
+// });
 
-// Serve static files from the 'public' folder
-app.use(express.static("public"));
+// Socket.IO connection handler
+io.on("connection", (socket) => {
+  console.log(`User connected: ${socket.id}`);
 
-// Global error handler TODO to redifine
-app.use((err, req, res, next) => {
-  res.status(500).json({
-    error: "Unexpected error occurred",
-    message: `Please try again later : ${err}`,
+  // Example: Handle a custom event from the client
+  socket.on("sendMessage", (data) => {
+    console.log("Message received:", data);
+    // Broadcast message to all clients
+    io.emit("newMessage", { message: data.message, timestamp: new Date().toISOString() });
+  });
+
+  socket.on("disconnect", () => {
+    console.log(`User disconnected: ${socket.id}`);
   });
 });
 
@@ -44,4 +76,18 @@ app.all("/{*splat}", async (req, res) => {
     status: "fail",
     message: `Cannot find ${req.originalUrl} on this server`,
   });
+});
+
+// Global error handler
+app.use((err, req, res, next) => {
+  console.error(err.stack); // Log error for debugging
+  res.status(500).json({
+    status: "error",
+    message: `Unexpected error occurred: ${err.message}`,
+  });
+});
+
+// Start the server
+server.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });

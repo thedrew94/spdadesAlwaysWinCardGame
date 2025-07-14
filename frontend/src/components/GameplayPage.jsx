@@ -17,7 +17,7 @@ import GameSettingsMenu from "./GameSettingsMenu";
 // import avatar7 from "../assets/1S.png";
 // import avatar8 from "../assets/11H.png";
 
-export default function GameplayPage() {
+export default function GameplayPage({ socket }) {
   const [settingsMenuOpen, setSettingsMenuOpen] = useState(false);
   const [targetPoints, setTargetPoints] = useState(1);
   const swiperRef = useRef(null);

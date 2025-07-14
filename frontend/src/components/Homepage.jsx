@@ -4,7 +4,7 @@ import AvatarSelection from "./AvatarSelection";
 import LanguageSelector from "./LanguageSelector";
 import Loader from "./Loader";
 
-export default function Homepage() {
+export default function Homepage({ socket }) {
   const [page, setPage] = useState(1);
   const [playersCount, setPlayersCount] = useState(2);
 
