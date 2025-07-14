@@ -514,12 +514,12 @@ img:not([src]) {
   animation: renderInBtn 0.2s ease-in forwards;
 }
 
-.avatar_selection_swiper .swiper {
+.avatar_swiper {
   width: 100%;
   height: 100%;
 }
 
-.avatar_selection_swiper .swiper-slide {
+.avatar_swiper .swiper-slide {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -532,15 +532,13 @@ img:not([src]) {
   cursor: pointer;
   overflow: hidden;
   box-sizing: border-box;
-  transition: all 0.25s;
 }
 
-.avatar_selected {
-  background: radial-gradient(circle, #8b4513 0%, #a0522d 100%);
-  transition: all 0.25s;
+.avatar_swiper .avatar_selected {
+  background: radial-gradient(circle, #8b4513 0%, #a0522d 100%) !important;
 }
 
-.avatar_selection_swiper .avatar_container {
+.avatar_swiper .avatar_container {
   width: 100%;
   height: 100%;
   display: flex;
@@ -548,7 +546,7 @@ img:not([src]) {
   align-items: center;
 }
 
-.avatar_selection_swiper .swiper-slide img {
+.avatar_swiper .swiper-slide img {
   display: block;
   width: 48px;
   height: 48px;
@@ -772,23 +770,64 @@ img:not([src]) {
     https://uiverse.io/20essentials/purple-rattlesnake-49
     */
 
-.cards_swiper {
+.cards_layer {
   position: fixed;
-  bottom: 0;
-  left: 50%;
-  width: 198px;
-  height: 260px;
-  padding: 20px;
-  transform: translateX(-50%);
-}
-
-.cards_swiper .swiper {
+  z-index: 1;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding-top: 20vh;
+  background-color: rgb(33, 33, 33, 0.85);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
 
-.cards_swiper .swiper-slide {
+.start_info {
+  font-family: "Jua", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 2.2rem;
+  color: #f1dabb;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.cards_swiper {
+  position: fixed;
+  z-index: 1;
+  bottom: 10px;
+  left: 50%;
+  width: 250px;
+  height: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  transform: translateX(-50%);
+  /* border: 1px solid red; */
+}
+
+.cards_swiper .game_btn {
+  justify-content: center;
+  max-width: 100%;
+  width: 100%;
+  min-width: 100%;
+}
+
+.cardsSwiperEl {
+  /* CARDS SIZE */
+  width: 198px;
+  height: 256px;
+  overflow: visible !important;
+}
+
+.cardsSwiperEl .swiper-slide {
   width: 100%;
   height: 100%;
   display: flex;
@@ -797,55 +836,54 @@ img:not([src]) {
   transition: all 0.25s;
 }
 
-.cards_swiper .swiper-slide img {
+.cardsSwiperEl .swiper-slide img {
   width: 100%;
   height: 100%;
   pointer-events: none;
   user-select: none;
 }
 
-.cards_swiper .swiper-slide-active {
-  transform: translateY(-50px);
+.cardsSwiperEl .swiper-slide-active {
+  transform: translateY(-30px);
 }
 
 .player_info_panel_container {
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  padding: 30px 20px;
-  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  padding: 30px 20px 0;
 }
 
 .player_panel {
   position: relative;
-  margin-top: 70px;
-  width: 60px;
-  height: 60px;
+  width: 90px;
+  height: 130px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+
+.player_panel_img {
   display: flex;
   justify-content: center;
   align-items: center;
+  min-width: 60px;
+  width: 60px;
+  min-height: 60px;
+  height: 60px;
   border: 2px solid #3f200b;
-  border-radius: 20%;
+  border-radius: 50%;
   background: radial-gradient(circle, #fcd685 0%, #fed483 25%, #fcc276 75%, #fab26e 100%);
+  object-fit: cover;
 }
 
-.player_panel_decoration {
-  position: absolute;
-  z-index: -1;
-  top: -28px;
-  right: -20px;
-  transform: rotate(30deg);
-  width: 64px;
-  height: 64px;
-}
-
-.player_panel_name {
+.player_panel_info {
   position: absolute;
   z-index: 1;
-  bottom: -25px;
+  top: 40%;
   left: 50%;
   padding: 5px;
   width: 100%;
@@ -853,7 +891,6 @@ img:not([src]) {
   border: 2px solid #3f200b;
   border-radius: 5px;
   background: radial-gradient(circle, #fcd685 0%, #fed483 25%, #fcc276 75%, #fab26e 100%);
-  background: radial-gradient(circle, #d88b74 0%, #923d3d 100%);
   font-family: "Jua", sans-serif;
   font-weight: 400;
   font-style: normal;
@@ -861,6 +898,115 @@ img:not([src]) {
   color: #3f200b;
   text-align: center;
   white-space: nowrap;
+}
+
+.player_panel h6 {
+  text-align: center;
+  font-family: "Jua", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.4rem;
+  color: #3f200b;
+}
+
+.player_panel_decoration {
+  position: absolute;
+  z-index: -1;
+  top: -25px;
+  right: -5px;
+  transform: rotate(30deg);
+  width: 64px;
+  height: 64px;
+}
+
+.gameplaypage {
+  width: 100%;
+  height: 80vh;
+  min-height: 400px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+}
+
+.gameplaypage_gamearea {
+  position: relative;
+}
+
+.gameplaypage_gamearea_bg {
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.15;
+}
+
+.top_info_container {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  width: fit-content;
+}
+
+.top_info_container_upper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+}
+
+.top_info_container .game_btn {
+  min-width: 80px;
+  width: 80px;
+  max-width: 80px;
+  justify-content: center;
+}
+
+.round_counter {
+  -webkit-background-clip: text;
+  -webkit-text-stroke: 4px #3f200b;
+  background: linear-gradient(to bottom, #f3e08a, #e5a856);
+  background-clip: text;
+  font-size: 8rem;
+  line-height: 6rem;
+  white-space: nowrap;
+  color: transparent;
+  user-select: none;
+}
+
+.game_settings_outter {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(33, 33, 33, 0.85);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.game_settings {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 10px;
+}
+
+.game_settings .game_link {
+  color: #f1dabb;
 }
 
 /* Tablets (portrait and landscape, typically 768px to 1024px) */

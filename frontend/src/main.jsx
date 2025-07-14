@@ -4,6 +4,10 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { GlobalProvider } from "./components/GlobalProvider";
 import Loader from "./components/Loader";
 import "./global.css";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/pagination";
 
 const Homepage = lazy(() => import("./components/Homepage"));
 const GameplayPage = lazy(() => import("./components/GameplayPage"));
