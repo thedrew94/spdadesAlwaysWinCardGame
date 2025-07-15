@@ -4,9 +4,10 @@ const GlobalContext = createContext();
 
 export function GlobalProvider({ children }) {
   const [userData, setUserData] = useState({
-    username: "",
-    email: "",
-    tel: "",
+    gameStatus: "default",
+    roomID: "",
+    playerUsername: "",
+    playerSelectedAvatar: "",
   });
 
   return <GlobalContext.Provider value={{ userData, setUserData }}>{children}</GlobalContext.Provider>;

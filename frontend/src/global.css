@@ -647,13 +647,14 @@ img:not([src]) {
 }
 
 .available_games_join {
+  --list-height: 250px;
   display: flex;
   flex-direction: column;
   gap: 10px;
   min-width: 300px;
   max-width: 300px;
-  min-height: 400px;
-  max-height: 400px;
+  min-height: var(--list-height);
+  max-height: var(--list-height);
   padding: 15px;
   background: radial-gradient(circle, #f1dabb 0%, #ecd6b8 100%);
   border: 3px solid #3f200b;
@@ -672,12 +673,13 @@ img:not([src]) {
   width: 100%;
   padding: 5px 0;
   display: grid;
-  grid-template-columns: 1fr minmax(50px, 50px) minmax(50px, 50px);
+  grid-template-columns: 1fr minmax(55px, 55px) minmax(50px, 50px);
   align-items: center;
   align-content: center;
   justify-items: end;
   justify-content: end;
   border-bottom: 3px solid #3f200b;
+  white-space: nowrap;
 }
 
 .available_romm_li h6 {
@@ -962,7 +964,13 @@ img:not([src]) {
   gap: 50px;
 }
 
-.top_info_container .game_btn {
+.settings_btn_container {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+}
+
+.settings_btn_container .game_btn {
   min-width: 80px;
   width: 80px;
   max-width: 80px;

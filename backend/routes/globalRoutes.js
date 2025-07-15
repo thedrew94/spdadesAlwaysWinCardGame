@@ -1,7 +1,11 @@
 const express = require("express");
-const router = express.Router();
 const globalControllers = require("./../controllers/globalControllers");
 
-router.post("/getData", globalControllers.getData);
-
-module.exports = router;
+module.exports = function (io) {
+  const router = express.Router();
+  router.get("/room", globalControllers.getAvailableRooms);
+  router.get("/room/:roomID", globalControllers.getRoomByID);
+  router.post("/room", (req, res, next) => globalControllers.joinRoomByID(req, res, next, io));
+  router.post("/newRoom", globalControllers.newRoom);
+  return router;
+};

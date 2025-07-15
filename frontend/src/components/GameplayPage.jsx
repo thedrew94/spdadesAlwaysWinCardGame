@@ -5,10 +5,10 @@ import "swiper/css/free-mode";
 
 import { useEffect, useRef, useState } from "react";
 import s4 from "../assets/4S_test.png";
-import PlayerInfoPanel from "./PlayerInfoPanel";
-import LanguageSelector from "./LanguageSelector";
 import { svgSelector } from "../utils/svgSelector";
 import GameSettingsMenu from "./GameSettingsMenu";
+import PlayerInfoPanel from "./PlayerInfoPanel";
+import GameInfoBoard from "./GameInfoBoard";
 // import avatar2 from "../assets/7C.png";
 // import avatar3 from "../assets/12S.png";
 // import avatar4 from "../assets/11D.png";
@@ -58,23 +58,19 @@ export default function GameplayPage({ socket }) {
   return (
     <div className="gameplaypage">
       <GameSettingsMenu settingsMenuOpen={settingsMenuOpen} setSettingsMenuOpen={setSettingsMenuOpen} />
-      <LanguageSelector />
-      <div className="top_info_container">
-        <div className="top_info_container_upper">
-          <button
-            className="game_btn"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setSettingsMenuOpen(true);
-            }}
-          >
-            {svgSelector({ svgName: "settings", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
-          </button>
-          <div className="round_counter">ROUND 1</div>
-        </div>
-        <div>currently playing player</div>
+      <div className="settings_btn_container">
+        <button
+          className="game_btn"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setSettingsMenuOpen(true);
+          }}
+        >
+          {svgSelector({ svgName: "settings", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
+        </button>
       </div>
+      <GameInfoBoard />
       <div className="player_info_panel_container">
         <PlayerInfoPanel />
         <PlayerInfoPanel />

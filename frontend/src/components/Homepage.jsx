@@ -8,9 +8,16 @@ import PageNewGame from "./PageNewGame";
 import PageSupport from "./PageSupport";
 import PageWaitingForGame from "./PageWaitingForGame";
 import RoundInfo from "./RoundInfo";
+import { useNavigate } from "react-router-dom";
 
 export default function Homepage({ socket }) {
+  const navigate = useNavigate();
   const [page, setPage] = useState(1);
+
+  socket.on("gameStart", (data) => {
+    console.log(data);
+    navigate(`/game`);
+  });
 
   return (
     <div className="homepage">

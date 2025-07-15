@@ -9,6 +9,7 @@ import "./global.css";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
+import ConfigLayer from "./components/ConfigLayer";
 
 const Homepage = lazy(() => import("./components/Homepage"));
 const GameplayPage = lazy(() => import("./components/GameplayPage"));
@@ -22,30 +23,30 @@ const socket = io.connect("http://localhost:5175", {
   autoConnect: true,
 });
 
-console.log("socket", socket);
-
 createRoot(document.getElementById("root")).render(
   // GLOBAL STORAGE | TO STORE DATA THAT CAN BE ACCESSIBLE FROM EVERY COMPONENT
   <GlobalProvider>
     <BrowserRouter>
       <Routes>
         {/* PUBLIC ROUTES | AVAILABLE FOR ALL USERS */}
-        <Route
-          path="/"
-          element={
-            <Suspense fallback={<Loader isLoading={true} />}>
-              <Homepage socket={socket} />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/game"
-          element={
-            <Suspense fallback={<Loader isLoading={true} />}>
-              <GameplayPage socket={socket} />
-            </Suspense>
-          }
-        />
+        <Route element={<ConfigLayer socket={socket} />}>
+          <Route
+            path="/"
+            element={
+              <Suspense fallback={<Loader isLoading={true} />}>
+                <Homepage socket={socket} />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/game"
+            element={
+              <Suspense fallback={<Loader isLoading={true} />}>
+                <GameplayPage socket={socket} />
+              </Suspense>
+            }
+          />
+        </Route>
 
         {/* CATCH ALL NOT DEFINED ROUTES */}
         <Route path="*" element={<div>Not Found</div>} />

@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const http = require("http"); // Required for Socket.IO
+const http = require("http");
 const { Server } = require("socket.io");
 
 // Environment arguments
@@ -30,10 +30,10 @@ const io = new Server(server, {
 // Middleware setup
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:5174"], // Allow frontend origins
+    origin: ["http://localhost:5173", "http://localhost:5174"],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true, // Allow cookies
+    credentials: true,
   })
 );
 app.use(cookieParser()); // Parse cookies
@@ -47,7 +47,7 @@ app.get("/", (req, res) => {
 });
 
 // Mount the routes
-app.use("/api", globalRoutes);
+app.use("/api", globalRoutes(io));
 
 // // Example API route with Socket.IO integration
 // app.post("/api/message", (req, res) => {

@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { svgSelector } from "../utils/svgSelector";
 import AvatarSelection from "./AvatarSelection";
+import { useGlobal } from "./GlobalProvider";
 
-export default function PageNewGame({ setPage = () => {} }) {
+export default function PageNewGame({ socket, setPage = () => {} }) {
+  const { setUserData } = useGlobal();
+
   const [formData, setFormData] = useState({
     username: "",
     playerCount: 2,
@@ -12,6 +15,20 @@ export default function PageNewGame({ setPage = () => {} }) {
   async function handleFormSubmit(e) {
     e.preventDefault();
     setPage(4);
+    const response = await fetch("http://localhost:5175/api/newRoom", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...formData, socketID: socket.id }),
+      credentials: "include",
+    });
+
+    const fetchedData = await response.json();
+
+    setUserData((prev) => {
+      return { ...prev, gameStatus: "awaitingplayers", roomID: fetchedData.data.roomID };
+    });
   }
 
   return (
@@ -21,24 +38,6 @@ export default function PageNewGame({ setPage = () => {} }) {
         handleFormSubmit(e);
       }}
     >
-      <fieldset className="input_username">
-        <input
-          type="text"
-          name="username"
-          id="username"
-          autoComplete="off"
-          placeholder="Player username"
-          className="input_text_default"
-          value={formData.username}
-          onChange={(e) => {
-            setFormData((curr) => {
-              return { ...curr, username: e.target.value };
-            });
-          }}
-        />
-        {svgSelector({ svgName: "pen", svgWidth: "28px", svgHeight: "28px", svgFill: "#3f200b" })}
-      </fieldset>
-
       <fieldset className="input_players">
         <button
           type="button"
@@ -62,7 +61,26 @@ export default function PageNewGame({ setPage = () => {} }) {
           {svgSelector({ svgName: "play", svgWidth: "28px", svgHeight: "28px", svgFill: "#3f200b" })}
         </button>
       </fieldset>
+      <fieldset className="input_username">
+        <input
+          type="text"
+          name="username"
+          id="username"
+          autoComplete="off"
+          placeholder="Player username"
+          className="input_text_default"
+          value={formData.username}
+          onChange={(e) => {
+            setFormData((curr) => {
+              return { ...curr, username: e.target.value };
+            });
+          }}
+        />
+        {svgSelector({ svgName: "pen", svgWidth: "28px", svgHeight: "28px", svgFill: "#3f200b" })}
+      </fieldset>
+
       <AvatarSelection formData={formData} setFormData={setFormData} />
+
       <button type="submit" className="game_btn">
         START GAME{svgSelector({ svgName: "play", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
       </button>
