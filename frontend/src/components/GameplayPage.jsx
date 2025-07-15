@@ -9,6 +9,7 @@ import { svgSelector } from "../utils/svgSelector";
 import GameSettingsMenu from "./GameSettingsMenu";
 import PlayerInfoPanel from "./PlayerInfoPanel";
 import GameInfoBoard from "./GameInfoBoard";
+import { useGlobal } from "./GlobalProvider";
 // import avatar2 from "../assets/7C.png";
 // import avatar3 from "../assets/12S.png";
 // import avatar4 from "../assets/11D.png";
@@ -18,9 +19,12 @@ import GameInfoBoard from "./GameInfoBoard";
 // import avatar8 from "../assets/11H.png";
 
 export default function GameplayPage({ socket }) {
+  const { userData } = useGlobal();
   const [settingsMenuOpen, setSettingsMenuOpen] = useState(false);
   const [targetPoints, setTargetPoints] = useState(1);
   const swiperRef = useRef(null);
+
+  console.log("userData", userData);
 
   const handleSlideClick = (index) => {
     if (swiperRef.current && swiperRef.current.swiper) {

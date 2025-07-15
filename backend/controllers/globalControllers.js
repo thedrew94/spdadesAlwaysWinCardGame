@@ -1,5 +1,5 @@
 const { distributeCards } = require("../utils/distributeCards");
-const { getRoom, getAllRooms, addRoom, addPlayerToRoom } = require("./roomsController");
+const { getRoom, getAllRooms, addRoom, addPlayerToRoom, updateRoomPlayersData } = require("./roomsController");
 
 // @POST /api/getData
 exports.newRoom = async (req, res, next) => {
@@ -24,7 +24,17 @@ exports.newRoom = async (req, res, next) => {
 
   const newRoom = {
     roomID: generateRoomId(),
-    roomPlayers: [{ socketID, playerUsername: username, playerAvatar: selectedAvatar }],
+    roomPlayers: [
+      {
+        socketID,
+        playerUsername: username,
+        playerAvatar: selectedAvatar,
+        playerTarget: null,
+        playerCurrentPoints: null,
+        playerCards: [],
+        playerPlaying: false,
+      },
+    ],
     roomMaxPlayers: playerCount,
   };
 
@@ -45,7 +55,15 @@ exports.joinRoomByID = async (req, res, next, io) => {
 
   const roomData = addPlayerToRoom({
     roomID,
-    playerData: { socketID, playerUsername: username, playerAvatar: selectedAvatar },
+    playerData: {
+      socketID,
+      playerUsername: username,
+      playerAvatar: selectedAvatar,
+      playerTarget: null,
+      playerCurrentPoints: null,
+      playerCards: [],
+      playerPlaying: false,
+    },
   });
 
   if (roomData.status !== "success") {
@@ -57,23 +75,30 @@ exports.joinRoomByID = async (req, res, next, io) => {
   }
 
   if (roomData.data.roomPlayers.length === roomData.data.roomMaxPlayers) {
-    // generate cards and distribute cards to the players
     const playersCardsData = distributeCards({ numbPlayers: roomData.data.roomMaxPlayers });
-    // add cards to each player and send all the data to the client to populate the globalprovider
-    //   const newRoom = {
-    //     roomID: generateRoomId(),
-    //     roomPlayers: [{ socketID: "", playerUsername: username, playerAvatar:
-    //     selectedAvatar }],
-    //     roomMaxPlayers: playerCount,
-    //   };
+    const updatedPlayersData = roomData.data.roomPlayers.map((p, idx) => {
+      return { ...p, playerCards: playersCardsData[idx] };
+    });
+
+    const updatedRoomData = updateRoomPlayersData({ roomID, playersData: updatedPlayersData });
+
+    if (updatedRoomData.status !== "success") {
+      return res.status(400).json({
+        status: updatedRoomData.status,
+        message: updatedRoomData.message,
+        data: null,
+      });
+    }
+
+    // TODO: TO EACH PLAYER ONLY RETURN THEIR OWN CARDS AND NOT EVERYBODY CARDS
     roomData.data.roomPlayers.forEach((player) => {
       io.to(player.socketID).emit("gameStart", {
         status: "success",
         message: "Game started successfully",
-        data: playersCardsData,
+        data: updatedRoomData.data,
       });
     });
-    return;
+    return res.status(200).end();
   }
 
   res.status(200).json({

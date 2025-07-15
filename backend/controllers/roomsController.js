@@ -52,3 +52,15 @@ exports.addPlayerToRoom = ({ roomID = "", playerData = {} }) => {
   roomData.roomPlayers.push(playerData);
   return { status: "success", data: roomData };
 };
+
+exports.updateRoomPlayersData = ({ roomID = "", playersData = [] }) => {
+  const roomIdx = rooms.findIndex((r) => r.roomID === roomID);
+  if (roomIdx === -1) {
+    return { status: "fail", message: "No room was found for the provided room id" };
+  }
+  rooms[roomIdx].roomPlayers = playersData;
+  return {
+    status: "success",
+    data: rooms[roomIdx],
+  };
+};

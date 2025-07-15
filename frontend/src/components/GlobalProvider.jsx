@@ -8,6 +8,7 @@ export function GlobalProvider({ children }) {
     roomID: "",
     playerUsername: "",
     playerSelectedAvatar: "",
+    roomPlayers: [],
   });
 
   return <GlobalContext.Provider value={{ userData, setUserData }}>{children}</GlobalContext.Provider>;

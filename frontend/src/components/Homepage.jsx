@@ -9,13 +9,17 @@ import PageSupport from "./PageSupport";
 import PageWaitingForGame from "./PageWaitingForGame";
 import RoundInfo from "./RoundInfo";
 import { useNavigate } from "react-router-dom";
+import { useGlobal } from "./GlobalProvider";
 
 export default function Homepage({ socket }) {
   const navigate = useNavigate();
+  const { setUserData } = useGlobal();
   const [page, setPage] = useState(1);
 
-  socket.on("gameStart", (data) => {
-    console.log(data);
+  socket.on("gameStart", (receivedData) => {
+    setUserData((prev) => {
+      return { ...prev, roomID: receivedData.data.roomID, rommPlayers: receivedData.data.roomPlayers };
+    });
     navigate(`/game`);
   });
 

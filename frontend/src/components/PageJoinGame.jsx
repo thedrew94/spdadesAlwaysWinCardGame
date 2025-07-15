@@ -33,6 +33,8 @@ export default function PageJoinGame({ setPage = () => {} }) {
       return console.log("error occured", fetchedData);
     }
 
+    if (!fetchedData) return;
+
     setUserData((prev) => {
       return { ...prev, gameStatus: "awaitingplayers", roomID: fetchedData.data.roomID };
     });

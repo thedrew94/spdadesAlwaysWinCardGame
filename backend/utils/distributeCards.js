@@ -19,6 +19,36 @@ const cards = [
   "13C", "13D", "13S", "13H"
 ]
 
+// prettier-ignore
+const cardsPlayers2 = [
+  "1C", "1D", "1S", "1H",
+  "2C", "2D", "2S", "2H",
+  "3C", "3D", "3S", "3H",
+  "4C", "4D", "4S", "4H",
+  "5C", "5D", "5S", "5H",
+  "6C", "6D", "6S", "6H",
+  "7C", "7D", "7S", "7H",
+]
+
 exports.distributeCards = ({ numbPlayers = 2 }) => {
+  if (numbPlayers === 2) {
+    const totalCards = cardsPlayers2.length;
+    const cardsPerPlayer = Math.floor(totalCards / numbPlayers);
+
+    // Shuffle cards (Fisher-Yates algorithm)
+    const shuffledCards = [...cardsPlayers2];
+    for (let i = shuffledCards.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledCards[i], shuffledCards[j]] = [shuffledCards[j], shuffledCards[i]];
+    }
+
+    // Distribute cards to players
+    const playersHands = Array.from({ length: numbPlayers }, () => []);
+    for (let i = 0; i < shuffledCards.length; i++) {
+      playersHands[i % numbPlayers].push(shuffledCards[i]);
+    }
+
+    return playersHands;
+  }
   return;
 };
