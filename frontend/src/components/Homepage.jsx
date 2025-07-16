@@ -17,8 +17,16 @@ export default function Homepage({ socket }) {
   const [page, setPage] = useState(1);
 
   socket.on("gameStart", (receivedData) => {
+    const playerCards = receivedData.data.roomPlayers.filter((rp) => rp.socketID === socket.id)[0].playerCards;
+    const updatedRoomPlayers = receivedData.data.roomPlayers.map(({ playerCards, ...rest }) => rest);
     setUserData((prev) => {
-      return { ...prev, roomID: receivedData.data.roomID, rommPlayers: receivedData.data.roomPlayers };
+      return {
+        ...prev,
+        gameStatus: "initialPhase",
+        roomID: receivedData.data.roomID,
+        roomPlayers: updatedRoomPlayers,
+        playerCards,
+      };
     });
     navigate(`/game`);
   });

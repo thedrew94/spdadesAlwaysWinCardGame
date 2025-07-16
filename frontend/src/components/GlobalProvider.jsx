@@ -8,6 +8,7 @@ export function GlobalProvider({ children }) {
     roomID: "",
     playerUsername: "",
     playerSelectedAvatar: "",
+    playerCards: [],
     roomPlayers: [],
   });
 
