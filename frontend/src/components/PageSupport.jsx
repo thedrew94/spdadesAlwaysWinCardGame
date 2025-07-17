@@ -1,21 +1,21 @@
 import { svgSelector } from "../utils/svgSelector";
+import FastAccessButton from "./FastAccessButton";
 
 export default function PageSupport({ setPage = () => {} }) {
   return (
     <div className="game_btns_home">
-      <button className="game_btn" onClick={() => setPage(1)}>
-        BUYME A COFFEE
-        {svgSelector({ svgName: "coffee", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
-      </button>
-      <button className="game_btn">
-        PAYPAL{svgSelector({ svgName: "rules", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
-      </button>
-      <button className="game_btn">
-        FOLLOW ME{svgSelector({ svgName: "linkedin", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
-      </button>
-      <button className="game_btn" onClick={() => setPage(1)}>
-        GO BACK{svgSelector({ svgName: "back", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
-      </button>
+      <FastAccessButton btnText="BUYME A COFFEE" btnSvg="coffee" fastBtnText="1" fastBtnTrigger="1" cbFunc={() => {}} />
+      <FastAccessButton btnText="PAYPAL" btnSvg="rules" fastBtnText="2" fastBtnTrigger="2" cbFunc={() => {}} />
+      <FastAccessButton btnText="FOLLOW ME" btnSvg="linkedin" fastBtnText="3" fastBtnTrigger="3" cbFunc={() => {}} />
+      <FastAccessButton
+        btnText="GO BACK"
+        btnSvg="back"
+        fastBtnText="4"
+        fastBtnTrigger="4"
+        cbFunc={() => {
+          setPage(1);
+        }}
+      />
     </div>
   );
 }

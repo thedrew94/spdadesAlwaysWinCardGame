@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { svgSelector } from "../utils/svgSelector";
 import AvatarSelection from "./AvatarSelection";
 import { useGlobal } from "./GlobalProvider";
+import FastAccessButton from "./FastAccessButton";
 
 export default function PageNewGame({ socket, setPage = () => {} }) {
   const { setUserData } = useGlobal();
@@ -30,6 +31,21 @@ export default function PageNewGame({ socket, setPage = () => {} }) {
       return { ...prev, gameStatus: "awaitingplayers", roomID: fetchedData.data.roomID };
     });
   }
+
+  useEffect(() => {
+    function handleKeyDown(event) {
+      if (event.key === "1") {
+        handleFormSubmit(event);
+      }
+      if (event.key === "2") {
+        setPage(2);
+      }
+    }
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   return (
     <form
@@ -81,12 +97,26 @@ export default function PageNewGame({ socket, setPage = () => {} }) {
 
       <AvatarSelection formData={formData} setFormData={setFormData} />
 
-      <button type="submit" className="game_btn">
-        START GAME{svgSelector({ svgName: "play", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
-      </button>
-      <button type="button" className="game_btn" onClick={() => setPage(2)}>
-        GO BACK{svgSelector({ svgName: "back", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
-      </button>
+      <div className="fast_game_btn_container">
+        <button type="submit" className="fast_game_btn">
+          <span className="fast_game_btn_content">1</span>
+        </button>
+        <button type="submit" className="game_btn">
+          START GAME
+          {svgSelector({ svgName: "play", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
+        </button>
+      </div>
+      <div className="fast_game_btn_container">
+        <button type="button" className="fast_game_btn">
+          <span className="fast_game_btn_content" onClick={() => setPage(2)}>
+            2
+          </span>
+        </button>
+        <button type="button" className="game_btn" onClick={() => setPage(2)}>
+          GO BACK
+          {svgSelector({ svgName: "back", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
+        </button>
+      </div>
     </form>
   );
 }

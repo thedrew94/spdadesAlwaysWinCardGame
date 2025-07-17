@@ -1,5 +1,6 @@
 const { distributeCards } = require("../utils/distributeCards");
-const { getRoom, getAllRooms, addRoom, addPlayerToRoom, updateRoomPlayersData } = require("./roomsController");
+// prettier-ignore
+const { getRoom, getAllRooms, addRoom, addPlayerToRoom, updateRoomPlayersData, deleteRoom } = require("./roomsController");
 
 // @POST /api/getData
 exports.newRoom = async (req, res, next) => {
@@ -98,7 +99,11 @@ exports.joinRoomByID = async (req, res, next, io) => {
         data: updatedRoomData.data,
       });
     });
-    return res.status(200).end();
+    return res.status(200).json({
+      status: "success",
+      message: "Room data fetched successfully",
+      data: null,
+    });
   }
 
   res.status(200).json({
@@ -127,4 +132,32 @@ exports.getRoomByID = async (req, res, next) => {
     message: "Room data fetched successfully",
     data: room,
   });
+};
+
+// @DELETE /api/room/:roomID
+exports.deleteRoomByID = async (req, res, next) => {
+  const { roomID } = req.body;
+
+  if (!roomID) {
+    return res.status(400).json({
+      status: "fail",
+      message: "Missing roomID",
+      data: null,
+    });
+  }
+
+  const roomData = deleteRoom({ roomID });
+  if (roomData.status === "success") {
+    res.status(200).json({
+      status: "success",
+      message: "Room deleted successfully",
+      data: null,
+    });
+  } else {
+    return res.status(400).json({
+      status: roomData.status,
+      message: roomData.message,
+      data: null,
+    });
+  }
 };

@@ -53,7 +53,7 @@ exports.addPlayerToRoom = ({ roomID = "", playerData = {} }) => {
   return { status: "success", data: roomData };
 };
 
-exports.updateRoomPlayersData = ({ roomID = "", playersData = [] }) => {
+exports.updateRoomPlayersData = ({ roomID = null, playersData = [] }) => {
   const roomIdx = rooms.findIndex((r) => r.roomID === roomID);
   if (roomIdx === -1) {
     return { status: "fail", message: "No room was found for the provided room id" };
@@ -63,4 +63,34 @@ exports.updateRoomPlayersData = ({ roomID = "", playersData = [] }) => {
     status: "success",
     data: rooms[roomIdx],
   };
+};
+
+exports.updateSinglePlayerData = ({ roomID = null, playerData = null }) => {
+  if (!roomID || !playerData) {
+    return { status: "fail", message: "Invalid room id or invalid player data" };
+  }
+  const roomIdx = rooms.findIndex((r) => r.roomID === roomID);
+  if (roomIdx === -1) {
+    return { status: "fail", message: "No room was found for the provided room id" };
+  }
+
+  const player = rooms[roomIdx].roomPlayers.find((p) => p.socketID === playerData.socketID);
+  player.playerTarget = playerData.targetPoints;
+
+  return {
+    status: "success",
+    data: rooms[roomIdx],
+  };
+};
+
+exports.deleteRoom = ({ roomID = null }) => {
+  if (!roomID) {
+    return { status: "fail", message: "Missing or invalid roomID" };
+  }
+  const roomIdx = rooms.findIndex((r) => r.roomID === roomID);
+  if (roomIdx === -1) {
+    return { status: "fail", message: "No room was found for the provided room id" };
+  }
+  rooms.splice(roomIdx, 1);
+  return { status: "success", message: "Room was deleted successfully" };
 };

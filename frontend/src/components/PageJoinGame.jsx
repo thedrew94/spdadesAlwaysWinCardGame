@@ -4,6 +4,7 @@ import { getFetch } from "../utils/getFetch";
 import { useState } from "react";
 import { useGlobal } from "./GlobalProvider";
 import AvatarSelection from "./AvatarSelection";
+import FastAccessButton from "./FastAccessButton";
 
 export default function PageJoinGame({ setPage = () => {} }) {
   const { userData, setUserData } = useGlobal();
@@ -33,7 +34,7 @@ export default function PageJoinGame({ setPage = () => {} }) {
       return console.log("error occured", fetchedData);
     }
 
-    if (!fetchedData) return;
+    if (!fetchedData || !fetchedData.data) return;
 
     setUserData((prev) => {
       return { ...prev, gameStatus: "awaitingplayers", roomID: fetchedData.data.roomID };
@@ -94,10 +95,15 @@ export default function PageJoinGame({ setPage = () => {} }) {
               );
             })}
         </ul>
-
-        <button className="game_btn" onClick={() => setPage(2)}>
-          GO BACK{svgSelector({ svgName: "back", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
-        </button>
+        <FastAccessButton
+          btnText="GO BACK"
+          btnSvg="back"
+          fastBtnText="1"
+          fastBtnTrigger="1"
+          cbFunc={() => {
+            setPage(2);
+          }}
+        />
       </form>
     </div>
   );

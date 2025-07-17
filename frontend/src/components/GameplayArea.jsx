@@ -13,10 +13,31 @@ export default function GameplayArea() {
           <img src="./src/assets/playing_card_256.png" alt="" width="256px" height="256px" draggable="false" />
         </div>
       </div>
-      <div>
-        <img src={s4} alt="" width="48px" height="48px" draggable="false" />
-        <img src={s4} alt="" width="48px" height="48px" draggable="false" />
-        <img src={s4} alt="" width="48px" height="48px" draggable="false" />
+      <div className="gameplayarea_cards">
+        <div className="gameplayarea_card">
+          <img src={s4} alt="" width="100%" height="100%" draggable="false" />
+        </div>
+        <div className="gameplayarea_card">
+          <img src={s4} alt="" width="100%" height="100%" draggable="false" />
+        </div>
+        <div className="gameplayarea_card">
+          <img src={s4} alt="" width="100%" height="100%" draggable="false" />
+        </div>
+        <div className="gameplayarea_card">
+          <img src={s4} alt="" width="100%" height="100%" draggable="false" />
+        </div>
+        <div className="gameplayarea_card">
+          <img src={s4} alt="" width="100%" height="100%" draggable="false" />
+        </div>
+        <div className="gameplayarea_card">
+          <img src={s4} alt="" width="100%" height="100%" draggable="false" />
+        </div>
+        <div className="gameplayarea_card">
+          <img src={s4} alt="" width="100%" height="100%" draggable="false" />
+        </div>
+        <div className="gameplayarea_card">
+          <img src={s4} alt="" width="100%" height="100%" draggable="false" />
+        </div>
       </div>
     </div>
   );

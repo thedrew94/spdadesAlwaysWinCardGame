@@ -4,6 +4,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const http = require("http");
 const { Server } = require("socket.io");
+const { setPlayerTargetPoints } = require("./middleware/socketMiddleware");
 
 // Environment arguments
 const PORT = process.env.PORT || 5175;
@@ -62,17 +63,12 @@ app.use("/api", globalRoutes(io));
 
 // Socket.IO connection handler
 io.on("connection", (socket) => {
-  console.log(`User connected: ${socket.id}`);
-
-  // Example: Handle a custom event from the client
-  socket.on("sendMessage", (data) => {
-    console.log("Message received:", data);
-    // Broadcast message to all clients
-    io.emit("newMessage", { message: data.message, timestamp: new Date().toISOString() });
+  socket.on("setPlayerTargetPoints", (data) => {
+    setPlayerTargetPoints(io, socket, data);
   });
 
   socket.on("disconnect", () => {
-    console.log(`User disconnected: ${socket.id}`);
+    //
   });
 });
 

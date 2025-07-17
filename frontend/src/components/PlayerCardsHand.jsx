@@ -1,6 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import "swiper/css";
 import "swiper/css/free-mode";
 import c2 from "../assets/cropped_cards/2C.png";
@@ -61,9 +61,14 @@ import { useGlobal } from "./GlobalProvider";
 // prettier-ignore
 const cardImages = { C_2: c2, D_2: d2, H_2: h2, S_2: s2, C_3: c3, D_3: d3, H_3: h3, S_3: s3, C_4: c4, D_4: d4, H_4: h4, S_4: s4, C_5: c5, D_5: d5, H_5: h5, S_5: s5, C_6: c6, D_6: d6, H_6: h6, S_6: s6, C_7: c7, D_7: d7, H_7: h7, S_7: s7, C_8: c8, D_8: d8, H_8: h8, S_8: s8, C_9: c9, D_9: d9, H_9: h9, S_9: s9, C_10: c10, D_10: d10, H_10: h10, S_10: s10, C_15: c15, D_15: d15, H_15: h15, S_15: s15 };
 
-export default function PlayerCardsHand() {
+export default function PlayerCardsHand({ isInitialPhase = true }) {
   const { userData } = useGlobal();
+  const [btnText, setBtnText] = useState("PLAY");
   const swiperRef = useRef(null);
+
+  function playCard() {
+    console.log("played", btnText);
+  }
 
   const handleSlideClick = (index) => {
     if (swiperRef.current && swiperRef.current.swiper) {
@@ -74,14 +79,12 @@ export default function PlayerCardsHand() {
   const handleSlideChange = () => {
     if (swiperRef.current) {
       const activeIndex = swiperRef.current.swiper.activeIndex;
-      console.log("Active Slide Index:", activeIndex);
-      // Trigger your custom event or logic here
-      // For example, you can access the active slide's data or perform an action
       const activeSlide = swiperRef.current.swiper.slides[activeIndex];
-      console.log("Active Slide:", activeSlide);
+      const cardData = activeSlide.getAttribute("data-card");
+      setBtnText(`PLAY ${cardData}` || "PLAY");
       // Example: Trigger a custom event
-      const event = new CustomEvent("activeSlideChanged", { detail: { activeIndex } });
-      window.dispatchEvent(event);
+      // const event = new CustomEvent("activeSlideChanged", { detail: { activeIndex } });
+      // window.dispatchEvent(event);
     }
   };
 
@@ -90,7 +93,6 @@ export default function PlayerCardsHand() {
       swiperRef.current.swiper.on("slideChange", handleSlideChange);
     }
 
-    // Cleanup event listener on component unmount
     return () => {
       if (swiperRef.current && swiperRef.current.swiper) {
         swiperRef.current.swiper.off("slideChange", handleSlideChange);
@@ -100,17 +102,34 @@ export default function PlayerCardsHand() {
 
   return (
     <div className="cards_swiper">
-      <button className="game_btn">PLAY 4S</button>
+      {!isInitialPhase && (
+        <button className="game_btn" onClick={() => playCard()}>
+          {btnText}
+        </button>
+      )}
 
-      <Swiper slidesPerView={1} spaceBetween={5} freeMode={true} ref={swiperRef} className="cardsSwiperEl">
+      <Swiper
+        slidesPerView={1}
+        spaceBetween={5}
+        freeMode={true}
+        ref={swiperRef}
+        className="cardsSwiperEl"
+        style={{
+          "--card-w": isInitialPhase ? "198px" : "99px",
+          "--card-h": isInitialPhase ? "256px" : "128px",
+        }}
+      >
         {userData.playerCards.map((p, idx) => {
           return (
-            <SwiperSlide key={`card_${idx}`} onClick={() => handleSlideClick(Number(idx))}>
+            <SwiperSlide
+              key={`card_${idx}`}
+              data-card={`${p.split("_")[1]}${p.split("_")[0]}`}
+              onClick={() => handleSlideClick(Number(idx))}
+            >
               <img
                 src={cardImages[p]}
                 alt={`Card: ${p}`}
                 title={`Card: ${p}`}
-                data-card={p}
                 width="48px"
                 height="48px"
                 draggable="false"

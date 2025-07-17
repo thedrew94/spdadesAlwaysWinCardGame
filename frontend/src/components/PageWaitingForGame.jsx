@@ -1,9 +1,31 @@
 import { svgSelector } from "../utils/svgSelector";
+import FastAccessButton from "./FastAccessButton";
 import { useGlobal } from "./GlobalProvider";
 import Loader from "./Loader";
 
 export default function PageWaitingForGame({ setPage = () => {} }) {
-  const { userData } = useGlobal();
+  const { userData, setUserData } = useGlobal();
+
+  async function quitGame() {
+    const response = await fetch("http://localhost:5175/api/room", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ roomID: userData.roomID }),
+      credentials: "include",
+    });
+
+    const fetchedData = await response.json();
+    if (fetchedData.status === "success") {
+      setUserData((prev) => {
+        return { ...prev, roomID: null };
+      });
+      setPage(1);
+
+      console.log("room deleted", fetchedData);
+    }
+  }
 
   return (
     <Loader isLoading={true}>
@@ -17,9 +39,15 @@ export default function PageWaitingForGame({ setPage = () => {} }) {
           Share the code with your friends to play together
           <br /> or wait for other people to join the room.
         </h6>
-        <button className="game_btn" onClick={() => setPage(1)}>
-          GO BACK{svgSelector({ svgName: "back", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
-        </button>
+        <FastAccessButton
+          btnText="QUIT"
+          btnSvg="back"
+          fastBtnText="1"
+          fastBtnTrigger="1"
+          cbFunc={() => {
+            quitGame();
+          }}
+        />
       </div>
     </Loader>
   );

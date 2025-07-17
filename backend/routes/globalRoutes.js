@@ -7,5 +7,6 @@ module.exports = function (io) {
   router.get("/room/:roomID", globalControllers.getRoomByID);
   router.post("/room", (req, res, next) => globalControllers.joinRoomByID(req, res, next, io));
   router.post("/newRoom", globalControllers.newRoom);
+  router.delete("/room", globalControllers.deleteRoomByID);
   return router;
 };

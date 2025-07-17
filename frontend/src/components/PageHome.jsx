@@ -1,17 +1,27 @@
-import { svgSelector } from "../utils/svgSelector";
+import FastAccessButton from "./FastAccessButton";
 
 export default function PageHome({ setPage = () => {} }) {
   return (
     <div className="game_btns_home">
-      <button className="game_btn" onClick={() => setPage(2)}>
-        PLAY{svgSelector({ svgName: "play", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
-      </button>
-      <button className="game_btn">
-        RULES{svgSelector({ svgName: "rules", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
-      </button>
-      <button className="game_btn" onClick={() => setPage(6)}>
-        SUPPORT{svgSelector({ svgName: "love", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
-      </button>
+      <FastAccessButton
+        btnText="PLAY"
+        btnSvg="play"
+        fastBtnText="1"
+        fastBtnTrigger="1"
+        cbFunc={() => {
+          setPage(2);
+        }}
+      />
+      <FastAccessButton btnText="RULES" btnSvg="rules" fastBtnText="2" fastBtnTrigger="2" cbFunc={() => {}} />
+      <FastAccessButton
+        btnText="SUPPORT"
+        btnSvg="love"
+        fastBtnText="3"
+        fastBtnTrigger="3"
+        cbFunc={() => {
+          setPage(6);
+        }}
+      />
     </div>
   );
 }

@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { svgSelector } from "../utils/svgSelector";
+import { useNavigate } from "react-router-dom";
 
 export default function GameSettingsMenu({ settingsMenuOpen = false, setSettingsMenuOpen = () => {} }) {
+  const navigate = useNavigate();
   const settingsMenu = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      console.log("clicked", settingsMenu.current, settingsMenu.current.contains(event.target));
+      // console.log("clicked", settingsMenu.current, settingsMenu.current.contains(event.target));
       if (settingsMenu.current && !settingsMenu.current.contains(event.target)) {
         setSettingsMenuOpen(false);
       }
@@ -42,7 +44,7 @@ export default function GameSettingsMenu({ settingsMenuOpen = false, setSettings
         <button className="game_btn">
           SUPPORT{svgSelector({ svgName: "love", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
         </button>
-        <button className="game_btn">
+        <button className="game_btn" onClick={() => navigate(`/`)}>
           QUIT GAME{svgSelector({ svgName: "quit", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
         </button>
         <button className="game_btn" onClick={() => setSettingsMenuOpen(false)}>

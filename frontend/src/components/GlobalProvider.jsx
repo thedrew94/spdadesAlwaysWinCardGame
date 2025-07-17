@@ -4,11 +4,13 @@ const GlobalContext = createContext();
 
 export function GlobalProvider({ children }) {
   const [userData, setUserData] = useState({
+    // default | awaitingPlayers | initialPhase | gameStarted
     gameStatus: "default",
     roomID: "",
     playerUsername: "",
     playerSelectedAvatar: "",
     playerCards: [],
+    gameplayAreaCards: [],
     roomPlayers: [],
   });
 

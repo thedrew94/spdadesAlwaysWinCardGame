@@ -240,7 +240,8 @@ img:not([src]) {
 }
 
 .loading_text,
-.loading_dot {
+.loading_dot,
+.waiting_text {
   position: relative;
   display: flex;
   width: fit-content;
@@ -257,6 +258,13 @@ img:not([src]) {
   user-select: none;
   transform-origin: center;
   animation: renderInBtn 0.2s ease-in forwards;
+}
+
+.waiting_text {
+  font-size: 5rem;
+  text-align: center;
+  line-height: 5rem;
+  -webkit-text-stroke: 2px #3f200b;
 }
 
 .dot1,
@@ -341,7 +349,7 @@ img:not([src]) {
 }
 
 .homepage_game_home {
-  max-width: 300px;
+  max-width: 360px;
 }
 
 .homepage_game_btns {
@@ -362,6 +370,95 @@ img:not([src]) {
   gap: 20px;
   min-height: 247px;
 }
+
+.fast_game_btn_container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 auto;
+  max-width: 360px;
+}
+
+.fast_game_btn {
+  position: relative;
+  display: inline-block;
+  min-width: 50px;
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #282828, #202020);
+  box-shadow: inset -8px 0 8px rgba(0, 0, 0, 0.15), inset 0 -8px 8px rgba(0, 0, 0, 0.25), 0 0 0 2px rgba(0, 0, 0, 0.75),
+    10px 20px 25px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  /* transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in; */
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  animation: renderInBtn 0.2s ease-in forwards;
+}
+
+.fast_game_btn_content {
+  position: absolute;
+  left: 15px;
+  top: 8px;
+  color: #e9e9e9;
+  font-size: 16px;
+  transition: transform 0.1s ease-in-out;
+}
+
+.fast_game_btn::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 4px;
+  bottom: 8px;
+  right: 8px;
+  background: linear-gradient(90deg, #232323, #4a4a4a);
+  border-radius: inherit;
+  box-shadow: -10px -10px 10px rgba(255, 255, 255, 0.25), 10px 5px 10px rgba(0, 0, 0, 0.15);
+  border-left: 1px solid #0004;
+  border-bottom: 1px solid #0004;
+  border-top: 1px solid #0009;
+  /* transition: all 0.1s ease-in-out; */
+}
+
+/* .fast_game_btn:active {
+  transform: translateY(2px);
+  box-shadow: inset -4px 0 4px rgba(0, 0, 0, 0.1), inset 0 -4px 4px rgba(0, 0, 0, 0.15), 0 0 0 2px rgba(0, 0, 0, 0.5),
+    5px 10px 15px rgba(0, 0, 0, 0.3);
+}
+
+.fast_game_btn::before:active {
+  top: 5px;
+  left: 5px;
+  bottom: 11px;
+  right: 11px;
+  box-shadow: -5px -5px 5px rgba(255, 255, 255, 0.15), 5px 3px 5px rgba(0, 0, 0, 0.1);
+} */
+
+/* &:active {
+    transform: translateY(2px);
+    box-shadow:
+      inset -4px 0 4px rgba(0, 0, 0, 0.1),
+      inset 0 -4px 4px rgba(0, 0, 0, 0.15),
+      0 0 0 2px rgba(0, 0, 0, 0.5),
+      5px 10px 15px rgba(0, 0, 0, 0.3);
+
+    &::before {
+      top: 5px;
+      left: 5px;
+      bottom: 11px;
+      right: 11px;
+      box-shadow:
+        -5px -5px 5px rgba(255, 255, 255, 0.15),
+        5px 3px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .letter {
+      transform: translateY(1px);
+    }
+      
+    https://uiverse.io/20essentials/purple-rattlesnake-49
+    */
 
 .game_btn {
   display: flex;
@@ -430,9 +527,10 @@ img:not([src]) {
   justify-content: space-between;
   align-items: center;
   gap: 0px;
-  min-width: 300px;
-  max-width: 300px;
+  min-width: 100%;
+  max-width: 100%;
   min-height: 69px;
+  height: 69px;
   max-height: 69px;
   margin: 0 auto;
   padding: 0 30px 0 0;
@@ -460,6 +558,7 @@ img:not([src]) {
 
 .input_text_default {
   width: 100%;
+  min-height: 100%;
   height: 100%;
   padding: 15px 0 15px 30px;
   font-size: inherit;
@@ -475,8 +574,8 @@ img:not([src]) {
   justify-content: space-between;
   align-items: center;
   gap: 0px;
-  min-width: 300px;
-  max-width: 300px;
+  min-width: 100%;
+  max-width: 100%;
   min-height: 69px;
   max-height: 69px;
   margin: 0 auto;
@@ -651,8 +750,8 @@ img:not([src]) {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  min-width: 300px;
-  max-width: 300px;
+  min-width: 100%;
+  max-width: 100%;
   min-height: var(--list-height);
   max-height: var(--list-height);
   padding: 15px;
@@ -666,6 +765,7 @@ img:not([src]) {
   font-size: 1.8rem;
   letter-spacing: 0.1em;
   color: #3f200b;
+  overflow-y: auto;
   animation: renderInBtn 0.2s ease-in forwards;
 }
 
@@ -747,31 +847,6 @@ img:not([src]) {
   transition: transform 0.1s ease-in-out;
 }
 
-/* &:active {
-    transform: translateY(2px);
-    box-shadow:
-      inset -4px 0 4px rgba(0, 0, 0, 0.1),
-      inset 0 -4px 4px rgba(0, 0, 0, 0.15),
-      0 0 0 2px rgba(0, 0, 0, 0.5),
-      5px 10px 15px rgba(0, 0, 0, 0.3);
-
-    &::before {
-      top: 5px;
-      left: 5px;
-      bottom: 11px;
-      right: 11px;
-      box-shadow:
-        -5px -5px 5px rgba(255, 255, 255, 0.15),
-        5px 3px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .letter {
-      transform: translateY(1px);
-    }
-      
-    https://uiverse.io/20essentials/purple-rattlesnake-49
-    */
-
 .cards_layer {
   position: fixed;
   z-index: 1;
@@ -782,11 +857,22 @@ img:not([src]) {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
   padding-top: 20vh;
   background-color: rgb(33, 33, 33, 0.85);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
+}
+
+.cards_layer_inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.cards_layer_inner .input_players {
+  min-width: 300px;
+  max-width: 300px;
 }
 
 .start_info {
@@ -805,7 +891,7 @@ img:not([src]) {
   bottom: 10px;
   left: 50%;
   width: 250px;
-  height: 360px;
+  height: 260px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -824,8 +910,11 @@ img:not([src]) {
 
 .cardsSwiperEl {
   /* CARDS SIZE */
-  width: 198px;
-  height: 256px;
+  --card-w: 198px;
+  --card-h: 256px;
+  width: var(--card-w);
+  height: var(--card-h);
+  transition: all 0.25s;
   overflow: visible !important;
 }
 
@@ -843,6 +932,7 @@ img:not([src]) {
   height: 100%;
   pointer-events: none;
   user-select: none;
+  transition: all 0.25s;
 }
 
 .cardsSwiperEl .swiper-slide-active {
@@ -866,6 +956,7 @@ img:not([src]) {
   justify-content: space-between;
   align-items: center;
   user-select: none;
+  animation: renderInBtn 0.2s ease-in forwards;
 }
 
 .player_panel_img {
@@ -933,6 +1024,9 @@ img:not([src]) {
 
 .gameplaypage_gamearea {
   position: relative;
+  padding: 20px;
+  user-select: none;
+  border: 1px solid red;
 }
 
 .gameplaypage_gamearea_bg {
@@ -944,6 +1038,24 @@ img:not([src]) {
   opacity: 0.15;
 }
 
+.gameplayarea_cards {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 294px;
+  gap: 10px;
+}
+
+.gameplayarea_card {
+  --card-size-w: 66px;
+  --card-size-h: 86px;
+  max-width: var(--card-size-w);
+  width: var(--card-size-w);
+  min-width: var(--card-size-w);
+  height: var(--card-size-h);
+}
+
 .top_info_container {
   position: fixed;
   top: 10px;
@@ -953,7 +1065,7 @@ img:not([src]) {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 50px;
+  gap: 10px;
   width: fit-content;
 }
 
@@ -966,6 +1078,7 @@ img:not([src]) {
 
 .settings_btn_container {
   position: fixed;
+  z-index: 2;
   top: 10px;
   right: 10px;
 }
@@ -977,7 +1090,9 @@ img:not([src]) {
   justify-content: center;
 }
 
-.round_counter {
+.round_counter,
+.err_msg,
+.curr_play_header {
   -webkit-background-clip: text;
   -webkit-text-stroke: 4px #3f200b;
   background: linear-gradient(to bottom, #f3e08a, #e5a856);
@@ -989,11 +1104,36 @@ img:not([src]) {
   user-select: none;
 }
 
+.err_msg {
+  font-size: 6rem;
+  line-height: 6rem;
+  -webkit-text-stroke: 3px #3f200b;
+  white-space: wrap;
+  text-align: center;
+  max-width: 800px;
+}
+
+.curr_play_header {
+  font-size: 4rem;
+  line-height: 4rem;
+  -webkit-text-stroke: 1px #3f200b;
+  white-space: wrap;
+  text-align: center;
+}
+
+.currently_playing {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
 .game_settings_outter {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 2;
+  z-index: 3;
   width: 100%;
   height: 100vh;
   display: flex;
@@ -1015,6 +1155,17 @@ img:not([src]) {
 
 .game_settings .game_link {
   color: #f1dabb;
+}
+
+.error_page {
+  min-height: 100vh;
+  background: radial-gradient(circle, #fcd685 0%, #fed483 25%, #fcc276 75%, #fab26e 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  background-color: #d2b48c;
 }
 
 /* Tablets (portrait and landscape, typically 768px to 1024px) */
