@@ -935,8 +935,10 @@ img:not([src]) {
   transition: all 0.25s;
 }
 
-.cardsSwiperEl .swiper-slide-active {
-  transform: translateY(-30px);
+.cardsSwiperEl .swiper-slide.swiper-slide-active {
+  position: relative;
+  z-index: 1;
+  transform: translate3d(0, -30px, 0) scale3d(1.4, 1.4, 1);
 }
 
 .player_info_panel_container {
@@ -1222,10 +1224,108 @@ img:not([src]) {
 @media screen and (max-width: 767px) {
   /* Your phone-specific styles here */
   body {
-    font-size: 14px;
   }
-  .container {
-    width: 95%;
-    margin: 0 auto;
+
+  .homepage {
+    padding: 50px 0 0;
+    gap: 10px;
+  }
+
+  .homepage_title {
+    font-size: 4rem;
+    line-height: 4rem;
+    -webkit-text-stroke: 3px #3f200b;
+  }
+
+  .title_main_letter {
+    font-size: 10rem;
+    line-height: 8rem;
+  }
+
+  .homepage_title img {
+    --img-size: 100px;
+    top: -33%;
+    left: 105px;
+    min-width: var(--img-size);
+    width: var(--img-size);
+    max-width: var(--img-size);
+    min-height: var(--img-size);
+    height: var(--img-size);
+    max-height: var(--img-size);
+  }
+
+  .homepage_game_home {
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  .fast_game_btn {
+    display: none;
+  }
+
+  .homepage_game_home {
+    min-width: unset;
+    max-width: 300px;
+  }
+
+  .loding_main .loading_dot {
+    font-size: 5rem;
+    line-height: 5rem;
+    -webkit-text-stroke: 3px #3f200b;
+  }
+
+  .loading_text {
+    font-size: 5rem;
+    line-height: 5rem;
+    -webkit-text-stroke: 3px #3f200b;
+  }
+
+  .game_code,
+  .waiting_text,
+  .round_counter {
+    font-size: 3rem;
+    line-height: 3rem;
+    -webkit-text-stroke: 2px #3f200b;
+  }
+
+  .curr_play_header {
+    font-size: 2rem;
+    line-height: 2rem;
+    -webkit-text-stroke: 1px #3f200b;
+  }
+
+  .game_code_container button svg {
+    min-width: 20px;
+    width: 20px;
+    max-width: 20px;
+  }
+
+  .game_code_text {
+    max-width: 290px;
+  }
+
+  .cards_layer {
+    padding: 100px 20px 0;
+  }
+
+  .start_info {
+    white-space: wrap;
+  }
+
+  .player_info_panel_container {
+    padding: 0 2.5px;
+  }
+
+  .gameplaypage_gamearea {
+    padding: 0;
+  }
+
+  .gameplayarea_cards {
+    gap: 5px;
+  }
+
+  .gameplayarea_card {
+    --card-size-w: 60px;
+    --card-size-h: 78px;
   }
 }
