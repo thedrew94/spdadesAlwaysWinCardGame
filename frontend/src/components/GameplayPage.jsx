@@ -22,17 +22,41 @@ export default function GameplayPage({ socket }) {
   const [settingsMenuOpen, setSettingsMenuOpen] = useState(false);
 
   socket.on("waitPlayerTargetPoints", (receivedData) => {
-    const hasInvalidPlayerTarget = receivedData.data.roomPlayers.some(
-      (p) => p.playerTarget === null || p.playerTarget === undefined
-    );
-    if (!hasInvalidPlayerTarget) {
-      setUserData((prev) => {
-        return { ...prev, gameStatus: "gameStarted" };
-      });
-    }
+    // console.log("userData.gameStatus", receivedData);
+    // const hasInvalidPlayerTarget = receivedData.data.roomPlayers.some(
+    //   (p) => p.playerTarget === null || p.playerTarget === undefined
+    // );
+    // if (!hasInvalidPlayerTarget) {
+    //   setUserData((prev) => {
+    //     return { ...prev, gameStatus: "gameStarted", roomPlayers: receivedData.data.roomPlayers };
+    //   });
+    // }
   });
 
-  console.log("userData.gameStatus", userData.gameStatus);
+  socket.on("gameCanStart", (receivedData) => {
+    const me = receivedData.data.roomPlayers.find((p) => p.socketID === userData.socketID);
+
+    setUserData((prev) => {
+      return {
+        ...prev,
+        gameStatus: "gameStarted",
+        roomPlayers: receivedData.data.roomPlayers,
+        amICurrentlyPlaying: me.playerPlaying,
+      };
+    });
+  });
+
+  socket.on("newCardPlayed", (receivedData) => {
+    console.log("dadadadada", receivedData);
+    const me = receivedData.data.roomPlayers.find((p) => p.socketID === userData.socketID);
+    setUserData((prev) => {
+      return {
+        ...prev,
+        gameFieldCards: receivedData.data.gameFieldCards,
+        amICurrentlyPlaying: me.playerPlaying,
+      };
+    });
+  });
 
   return (
     <>
@@ -53,12 +77,15 @@ export default function GameplayPage({ socket }) {
               {svgSelector({ svgName: "settings", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
             </button>
           </div>
-          <GameInfoBoard />
-          <PlayersInfoPanel />
-          <GameplayArea />
-          <PlayersInfoPanel />
+          <GameInfoBoard
+            playingPlayerData={userData.roomPlayers.find((p) => p.playerPlaying)}
+            roundWinningSuit={userData.roundWinningSuit}
+          />
+          <PlayersInfoPanel roomPlayers={userData.roomPlayers.filter((_, index) => index % 2 === 0)} />
+          <GameplayArea userData={userData} />
+          <PlayersInfoPanel roomPlayers={userData.roomPlayers.filter((_, index) => index % 2 !== 0)} />
           {userData.gameStatus === "initialPhase" && <GameInitialPhase socket={socket} userData={userData} />}
-          <PlayerCardsHand isInitialPhase={userData.gameStatus !== "gameStarted"} />
+          <PlayerCardsHand socket={socket} isInitialPhase={userData.gameStatus !== "gameStarted"} />
         </div>
       )}
     </>

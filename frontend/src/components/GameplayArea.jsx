@@ -1,6 +1,12 @@
-import s4 from "../assets/4S_test.png";
+import { renderCard } from "../utils/renderCard";
 
-export default function GameplayArea() {
+function reconstructCard(card) {
+  const letter = card.slice(-1);
+  const number = card.slice(0, -1);
+  return `${letter}_${number}`;
+}
+
+export default function GameplayArea({ userData }) {
   return (
     <div className="gameplaypage_gamearea">
       <div className="gameplaypage_gamearea_bg">
@@ -14,30 +20,13 @@ export default function GameplayArea() {
         </div>
       </div>
       <div className="gameplayarea_cards">
-        <div className="gameplayarea_card">
-          <img src={s4} alt="" width="100%" height="100%" draggable="false" />
-        </div>
-        <div className="gameplayarea_card">
-          <img src={s4} alt="" width="100%" height="100%" draggable="false" />
-        </div>
-        <div className="gameplayarea_card">
-          <img src={s4} alt="" width="100%" height="100%" draggable="false" />
-        </div>
-        <div className="gameplayarea_card">
-          <img src={s4} alt="" width="100%" height="100%" draggable="false" />
-        </div>
-        <div className="gameplayarea_card">
-          <img src={s4} alt="" width="100%" height="100%" draggable="false" />
-        </div>
-        <div className="gameplayarea_card">
-          <img src={s4} alt="" width="100%" height="100%" draggable="false" />
-        </div>
-        <div className="gameplayarea_card">
-          <img src={s4} alt="" width="100%" height="100%" draggable="false" />
-        </div>
-        <div className="gameplayarea_card">
-          <img src={s4} alt="" width="100%" height="100%" draggable="false" />
-        </div>
+        {userData?.gameFieldCards?.map((c, idx) => {
+          return (
+            <div key={`played_card_${idx}`} className="gameplayarea_card">
+              {renderCard({ cardName: reconstructCard(c.card) })}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

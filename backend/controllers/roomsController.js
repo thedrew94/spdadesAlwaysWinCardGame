@@ -13,6 +13,8 @@ const roomExample = {
       playerPlaying: false,
     },
   ],
+  gameFieldCards: [],
+  roundWinningSuit: null,
   roomMaxPlayers: 4,
 };
 
@@ -76,6 +78,37 @@ exports.updateSinglePlayerData = ({ roomID = null, playerData = null }) => {
 
   const player = rooms[roomIdx].roomPlayers.find((p) => p.socketID === playerData.socketID);
   player.playerTarget = playerData.targetPoints;
+
+  return {
+    status: "success",
+    data: rooms[roomIdx],
+  };
+};
+
+exports.updateRoomGameCards = ({ roomID = null, cardData = null }) => {
+  if (!roomID || !cardData) {
+    return { status: "fail", message: "Invalid room id or invalid player data" };
+  }
+  const roomIdx = rooms.findIndex((r) => r.roomID === roomID);
+  if (roomIdx === -1) {
+    return { status: "fail", message: "No room was found for the provided room id" };
+  }
+
+  rooms[roomIdx].gameFieldCards = [...rooms[roomIdx].gameFieldCards, cardData];
+
+  // Find the index of the current player (who played the card) based on socketID
+  const currentPlayerIndex = rooms[roomIdx].roomPlayers.findIndex(
+    (player) => player.socketID === cardData.playerSocket
+  );
+
+  rooms[roomIdx].roomPlayers.forEach((player) => {
+    player.playerPlaying = false;
+  });
+
+  const nextPlayerIndex =
+    currentPlayerIndex >= 0 && currentPlayerIndex < rooms[roomIdx].roomPlayers.length - 1 ? currentPlayerIndex + 1 : 0;
+
+  rooms[roomIdx].roomPlayers[nextPlayerIndex].playerPlaying = true;
 
   return {
     status: "success",

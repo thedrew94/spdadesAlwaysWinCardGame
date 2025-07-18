@@ -57,22 +57,37 @@ import h15 from "../assets/cropped_cards/15H.png";
 import s15 from "../assets/cropped_cards/15S.png";
 
 import { useGlobal } from "./GlobalProvider";
+import { renderCard } from "../utils/renderCard";
 
 // prettier-ignore
 const cardImages = { C_2: c2, D_2: d2, H_2: h2, S_2: s2, C_3: c3, D_3: d3, H_3: h3, S_3: s3, C_4: c4, D_4: d4, H_4: h4, S_4: s4, C_5: c5, D_5: d5, H_5: h5, S_5: s5, C_6: c6, D_6: d6, H_6: h6, S_6: s6, C_7: c7, D_7: d7, H_7: h7, S_7: s7, C_8: c8, D_8: d8, H_8: h8, S_8: s8, C_9: c9, D_9: d9, H_9: h9, S_9: s9, C_10: c10, D_10: d10, H_10: h10, S_10: s10, C_15: c15, D_15: d15, H_15: h15, S_15: s15 };
 
-export default function PlayerCardsHand({ isInitialPhase = true }) {
-  const { userData } = useGlobal();
+export default function PlayerCardsHand({ socket, isInitialPhase = true }) {
+  const { userData, setUserData } = useGlobal();
   const [btnText, setBtnText] = useState("PLAY");
   const swiperRef = useRef(null);
+  const idxRef = useRef(null);
 
   function playCard() {
-    console.log("played", btnText);
+    if (userData.amICurrentlyPlaying) {
+      const cardEl = document.querySelector(".swiper-slide-active");
+      const cardData = cardEl.getAttribute("data-card");
+      socket.emit("playCard", { roomID: userData.roomID, socketID: socket.id, cardData });
+      setUserData((prev) => {
+        const updatedCards = [...prev.playerCards];
+        updatedCards.splice(idxRef.current, 1);
+        return {
+          ...prev,
+          playerCards: updatedCards,
+        };
+      });
+    }
   }
 
   const handleSlideClick = (index) => {
     if (swiperRef.current && swiperRef.current.swiper) {
       swiperRef.current.swiper.slideTo(index);
+      idxRef.current = index;
     }
   };
 
@@ -103,7 +118,7 @@ export default function PlayerCardsHand({ isInitialPhase = true }) {
   return (
     <div className="cards_swiper">
       {!isInitialPhase && (
-        <button className="game_btn" onClick={() => playCard()}>
+        <button type="button" disabled={!userData.amICurrentlyPlaying} className="game_btn" onClick={() => playCard()}>
           {btnText}
         </button>
       )}
@@ -124,16 +139,19 @@ export default function PlayerCardsHand({ isInitialPhase = true }) {
             <SwiperSlide
               key={`card_${idx}`}
               data-card={`${p.split("_")[1]}${p.split("_")[0]}`}
-              onClick={() => handleSlideClick(Number(idx))}
+              onClick={() => {
+                handleSlideClick(Number(idx));
+              }}
             >
-              <img
+              {renderCard({ cardName: p })}
+              {/* <img
                 src={cardImages[p]}
                 alt={`Card: ${p}`}
                 title={`Card: ${p}`}
                 width="48px"
                 height="48px"
                 draggable="false"
-              />
+              /> */}
             </SwiperSlide>
           );
         })}

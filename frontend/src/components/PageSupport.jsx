@@ -1,4 +1,3 @@
-import { svgSelector } from "../utils/svgSelector";
 import FastAccessButton from "./FastAccessButton";
 
 export default function PageSupport({ setPage = () => {} }) {

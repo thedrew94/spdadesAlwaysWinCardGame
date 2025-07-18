@@ -7,23 +7,22 @@ export default function PageWaitingForGame({ setPage = () => {} }) {
   const { userData, setUserData } = useGlobal();
 
   async function quitGame() {
-    const response = await fetch("http://localhost:5175/api/room", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ roomID: userData.roomID }),
-      credentials: "include",
-    });
-
-    const fetchedData = await response.json();
-    if (fetchedData.status === "success") {
+    try {
+      await fetch("http://localhost:5175/api/room", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ roomID: userData.roomID }),
+        credentials: "include",
+      });
+    } catch (err) {
+      console.error(err);
+    } finally {
       setUserData((prev) => {
         return { ...prev, roomID: null };
       });
       setPage(1);
-
-      console.log("room deleted", fetchedData);
     }
   }
 

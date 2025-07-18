@@ -5,6 +5,8 @@ export default function GameInitialPhase({ socket, userData }) {
   const [awaitingPlayers, setAwaitingPlayers] = useState(false);
   const [targetPoints, setTargetPoints] = useState(1);
 
+  const maxPoints = userData.roomPlayers.length === 2 ? 10 : 10;
+
   function handleSubmit(e) {
     e.preventDefault();
     socket.emit("setPlayerTargetPoints", { roomID: userData.roomID, socketID: socket.id, targetPoints });
@@ -22,11 +24,11 @@ export default function GameInitialPhase({ socket, userData }) {
                 Once you are happy with your decision click the play button.
               </h6>
               <div className="input_players">
-                <button onClick={() => setTargetPoints((curr) => (curr <= 0 ? curr : curr - 1))}>
+                <button type="button" onClick={() => setTargetPoints((curr) => (curr <= 0 ? curr : curr - 1))}>
                   {svgSelector({ svgName: "play", svgWidth: "28px", svgHeight: "28px", svgFill: "#3f200b" })}
                 </button>
                 <span>{targetPoints} POINTS</span>
-                <button onClick={() => setTargetPoints((curr) => (curr >= 8 ? curr : curr + 1))}>
+                <button type="button" onClick={() => setTargetPoints((curr) => (curr >= maxPoints ? curr : curr + 1))}>
                   {svgSelector({ svgName: "play", svgWidth: "28px", svgHeight: "28px", svgFill: "#3f200b" })}
                 </button>
               </div>

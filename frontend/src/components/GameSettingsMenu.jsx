@@ -1,10 +1,32 @@
-import { useEffect, useRef, useState } from "react";
-import { svgSelector } from "../utils/svgSelector";
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { svgSelector } from "../utils/svgSelector";
+import { useGlobal } from "./GlobalProvider";
 
 export default function GameSettingsMenu({ settingsMenuOpen = false, setSettingsMenuOpen = () => {} }) {
+  const { userData, setUserData } = useGlobal();
   const navigate = useNavigate();
   const settingsMenu = useRef(null);
+
+  async function quitGame() {
+    try {
+      await fetch("http://localhost:5175/api/room", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ roomID: userData.roomID }),
+        credentials: "include",
+      });
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setUserData((prev) => {
+        return { ...prev, roomID: null };
+      });
+      navigate("/");
+    }
+  }
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -44,7 +66,7 @@ export default function GameSettingsMenu({ settingsMenuOpen = false, setSettings
         <button className="game_btn">
           SUPPORT{svgSelector({ svgName: "love", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
         </button>
-        <button className="game_btn" onClick={() => navigate(`/`)}>
+        <button className="game_btn" onClick={() => quitGame()}>
           QUIT GAME{svgSelector({ svgName: "quit", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
         </button>
         <button className="game_btn" onClick={() => setSettingsMenuOpen(false)}>

@@ -12,6 +12,8 @@ export function GlobalProvider({ children }) {
     playerCards: [],
     gameplayAreaCards: [],
     roomPlayers: [],
+    roundWinningSuit: null,
+    amICurrentlyPlaying: false,
   });
 
   return <GlobalContext.Provider value={{ userData, setUserData }}>{children}</GlobalContext.Provider>;

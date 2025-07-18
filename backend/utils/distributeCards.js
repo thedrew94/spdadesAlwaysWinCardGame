@@ -26,8 +26,6 @@ const cardsPlayers2 = [
   "C_3", "D_3", "S_3", "H_3",
   "C_4", "D_4", "S_4", "H_4",
   "C_5", "D_5", "S_5", "H_5",
-  "C_6", "D_6", "S_6", "H_6",
-  "C_7", "D_7", "S_7", "H_7",
 ]
 
 exports.distributeCards = ({ numbPlayers = 2 }) => {

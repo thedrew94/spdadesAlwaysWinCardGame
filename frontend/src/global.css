@@ -908,6 +908,13 @@ img:not([src]) {
   min-width: 100%;
 }
 
+.cards_swiper .game_btn:disabled {
+  color: #212121;
+  background: radial-gradient(circle, #cccccc 0%, #cccccc 100%);
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
 .cardsSwiperEl {
   /* CARDS SIZE */
   --card-w: 198px;
@@ -955,8 +962,8 @@ img:not([src]) {
   height: 130px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
+  gap: 30px;
   user-select: none;
   animation: renderInBtn 0.2s ease-in forwards;
 }
@@ -973,6 +980,7 @@ img:not([src]) {
   border-radius: 50%;
   background: radial-gradient(circle, #fcd685 0%, #fed483 25%, #fcc276 75%, #fab26e 100%);
   object-fit: cover;
+  overflow: hidden;
 }
 
 .player_panel_info {
@@ -1000,7 +1008,7 @@ img:not([src]) {
   font-family: "Jua", sans-serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 1.4rem;
+  font-size: 1.8rem;
   color: #3f200b;
 }
 
@@ -1058,6 +1066,15 @@ img:not([src]) {
   height: var(--card-size-h);
 }
 
+.gameplayarea_card img {
+  --card-size-w: 66px;
+  --card-size-h: 86px;
+  max-width: var(--card-size-w);
+  width: var(--card-size-w);
+  min-width: var(--card-size-w);
+  height: var(--card-size-h);
+}
+
 .top_info_container {
   position: fixed;
   top: 10px;
@@ -1096,7 +1113,7 @@ img:not([src]) {
 .err_msg,
 .curr_play_header {
   -webkit-background-clip: text;
-  -webkit-text-stroke: 4px #3f200b;
+  -webkit-text-stroke: 3px #3f200b;
   background: linear-gradient(to bottom, #f3e08a, #e5a856);
   background-clip: text;
   font-size: 8rem;
@@ -1116,19 +1133,29 @@ img:not([src]) {
 }
 
 .curr_play_header {
-  font-size: 4rem;
-  line-height: 4rem;
-  -webkit-text-stroke: 1px #3f200b;
+  font-size: 3rem;
+  line-height: 3rem;
+  -webkit-text-stroke: 0.5px #3f200b;
   white-space: wrap;
   text-align: center;
 }
 
+.curr_play_name {
+  font-family: "Jua", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 2rem;
+  color: #3f200b;
+}
+
 .currently_playing {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
+  min-width: 370px;
+  width: 370px;
+  max-width: 370px;
 }
 
 .game_settings_outter {
