@@ -39,6 +39,7 @@ exports.newRoom = async (req, res, next) => {
     gameFieldCards: [],
     roundWinningSuit: null,
     roomMaxPlayers: playerCount,
+    lastRoundData: {},
   };
 
   addRoom(newRoom);

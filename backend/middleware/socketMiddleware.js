@@ -1,4 +1,9 @@
-const { updateSinglePlayerData, updateRoomGameCards } = require("./../controllers/roomsController");
+const {
+  updateSinglePlayerData,
+  updateRoomGameCards,
+  updateRoundWinningSuit,
+  endRound,
+} = require("./../controllers/roomsController");
 
 exports.setPlayerTargetPoints = (io, socket, data) => {
   const roomData = updateSinglePlayerData({ roomID: data.roomID, playerData: data });
@@ -27,17 +32,48 @@ exports.setPlayerTargetPoints = (io, socket, data) => {
 };
 
 exports.playCard = (io, socket, data) => {
-  // roomID: userData.roomID, socketID: socket.id, cardData });
+  // { roomID: userData.roomID, socketID: socket.id, cardData }
+
   const updatedRoomData = updateRoomGameCards({
     roomID: data.roomID,
     cardData: { playerSocket: data.socketID, card: data.cardData },
   });
 
+  const allPlayersNoCards = updatedRoomData.data.roomPlayers.every((player) => player.playerCards.length === 0);
+
+  if (updatedRoomData.data.gameFieldCards.length === updatedRoomData.data.roomMaxPlayers) {
+    const endRoundData = endRound({ roomID: data.roomID });
+    if (allPlayersNoCards) {
+      io.to(player.socketID).emit("gameEnd", {
+        status: "success",
+        message: "Game ended",
+        data: null,
+      });
+      return;
+    }
+    updatedRoomData.data.roomPlayers.forEach((player) => {
+      io.to(player.socketID).emit("roundEnd", {
+        status: "success",
+        message: "Round ended",
+        data: endRoundData.data,
+      });
+    });
+    return;
+  }
+
+  let roomWinnigSuit;
+  if (updatedRoomData.data.gameFieldCards.length === 1) {
+    roomWinnigSuit = updateRoundWinningSuit({ roomID: data.roomID, cardSuit: data.cardData.slice(-1) });
+  }
+
   updatedRoomData.data.roomPlayers.forEach((player) => {
     io.to(player.socketID).emit("newCardPlayed", {
       status: "success",
       message: "A player played a card",
-      data: updatedRoomData.data,
+      data: {
+        ...updatedRoomData.data,
+        roundWinningSuit: roomWinnigSuit ? roomWinnigSuit.data : updatedRoomData.data.roundWinningSuit,
+      },
     });
   });
 };

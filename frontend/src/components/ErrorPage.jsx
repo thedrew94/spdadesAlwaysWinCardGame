@@ -1,7 +1,9 @@
-import { Link } from "react-router-dom";
-import { svgSelector } from "../utils/svgSelector";
+import { Link, useNavigate } from "react-router-dom";
+
+import FastAccessButton from "./FastAccessButton";
 
 export default function ErrorPage() {
+  const navigate = useNavigate();
   return (
     <div className="error_page">
       <div className="err_msg">
@@ -10,9 +12,18 @@ export default function ErrorPage() {
       </div>
 
       {/* <div>currently playing player</div> */}
-      <Link to="/" className="game_btn">
+      <FastAccessButton
+        btnText="GO BACK"
+        btnSvg="back"
+        fastBtnText="1"
+        fastBtnTrigger="1"
+        cbFunc={() => {
+          navigate("/");
+        }}
+      />
+      {/* <Link to="/" className="game_btn">
         GO BACK{svgSelector({ svgName: "back", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
-      </Link>
+      </Link> */}
     </div>
   );
 }

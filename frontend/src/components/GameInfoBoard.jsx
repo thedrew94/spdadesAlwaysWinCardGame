@@ -7,6 +7,11 @@ import avatar5 from "../assets/avatar_5.png";
 import avatar6 from "../assets/avatar_6.png";
 import avatar7 from "../assets/avatar_7.png";
 import avatar8 from "../assets/avatar_8.png";
+import dSymbol from "../assets/DSymbol.png";
+import cSymbol from "../assets/CSymbol.png";
+import sSymbol from "../assets/SSymbol.png";
+import hSymbol from "../assets/HSymbol.png";
+import cardBack from "../assets/BACK.png";
 
 const avatarsCollections = {
   1: avatar1,
@@ -19,13 +24,25 @@ const avatarsCollections = {
   8: avatar8,
 };
 
-export default function GameInfoBoard({ playingPlayerData, roundWinningSuit }) {
+export default function GameInfoBoard({ userData }) {
+  const playingPlayerData = userData.roomPlayers.find((p) => p.playerPlaying);
+  const roundWinningSymbolImgPath =
+    userData.roundWinningSuit === "D"
+      ? dSymbol
+      : userData.roundWinningSuit === "C"
+      ? cSymbol
+      : userData.roundWinningSuit === "S"
+      ? sSymbol
+      : userData.roundWinningSuit === "H"
+      ? hSymbol
+      : cardBack;
+
   return (
     <div className="top_info_container">
       <div className="top_info_container_upper">
         <div className="round_counter">ROUND 1</div>
         <div className="gameplayarea_card">
-          <img src={s4} alt="" width="100%" height="100%" draggable="false" />
+          <img src={roundWinningSymbolImgPath} alt="" draggable="false" />
         </div>
       </div>
       <div className="currently_playing">

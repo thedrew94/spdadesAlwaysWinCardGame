@@ -69,9 +69,15 @@ export default function PlayerCardsHand({ socket, isInitialPhase = true }) {
   const idxRef = useRef(null);
 
   function playCard() {
-    if (userData.amICurrentlyPlaying) {
-      const cardEl = document.querySelector(".swiper-slide-active");
-      const cardData = cardEl.getAttribute("data-card");
+    if (!userData.amICurrentlyPlaying) return;
+    const cardEl = document.querySelector(".swiper-slide-active");
+    const cardData = cardEl.getAttribute("data-card");
+    const cardSuit = cardData.slice(-1);
+    const roundWinningSuit = userData.roundWinningSuit;
+    // Check if the player has any cards matching the roundWinningSuit
+    const hasMatchingSuit = userData.playerCards.some((card) => card.slice(0, 1) === roundWinningSuit);
+
+    if (roundWinningSuit === "I" || cardSuit === roundWinningSuit || !hasMatchingSuit) {
       socket.emit("playCard", { roomID: userData.roomID, socketID: socket.id, cardData });
       setUserData((prev) => {
         const updatedCards = [...prev.playerCards];

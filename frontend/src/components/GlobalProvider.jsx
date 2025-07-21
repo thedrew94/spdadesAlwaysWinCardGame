@@ -10,10 +10,11 @@ export function GlobalProvider({ children }) {
     playerUsername: "",
     playerSelectedAvatar: "",
     playerCards: [],
-    gameplayAreaCards: [],
+    gameFieldCards: [],
     roomPlayers: [],
-    roundWinningSuit: null,
+    roundWinningSuit: "I",
     amICurrentlyPlaying: false,
+    lastRoundData: {},
   });
 
   return <GlobalContext.Provider value={{ userData, setUserData }}>{children}</GlobalContext.Provider>;

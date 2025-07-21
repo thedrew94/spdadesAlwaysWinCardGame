@@ -13,9 +13,10 @@ const roomExample = {
       playerPlaying: false,
     },
   ],
-  gameFieldCards: [],
-  roundWinningSuit: null,
+  gameFieldCards: [{ playerSocket: "", card: "4C" }],
+  roundWinningSuit: "C",
   roomMaxPlayers: 4,
+  lastRoundData: { gameFieldCards: [{ playerSocket: "", card: "4C" }], playerWinner: "", winningCard: "4C" },
 };
 
 exports.getAllRooms = ({ filter = "" }) => {
@@ -86,6 +87,8 @@ exports.updateSinglePlayerData = ({ roomID = null, playerData = null }) => {
 };
 
 exports.updateRoomGameCards = ({ roomID = null, cardData = null }) => {
+  // cardData = { socketID: socket.id, cardData }
+
   if (!roomID || !cardData) {
     return { status: "fail", message: "Invalid room id or invalid player data" };
   }
@@ -110,6 +113,12 @@ exports.updateRoomGameCards = ({ roomID = null, cardData = null }) => {
 
   rooms[roomIdx].roomPlayers[nextPlayerIndex].playerPlaying = true;
 
+  const { playerSocket, card } = cardData;
+  const [cardValue, cardSuit] = [card.slice(0, -1), card.slice(-1)];
+  const formattedCard = `${cardSuit}_${cardValue}`;
+  const player = rooms[roomIdx].roomPlayers.find((p) => p.socketID === playerSocket);
+  player.playerCards = player.playerCards.filter((c) => c !== formattedCard);
+
   return {
     status: "success",
     data: rooms[roomIdx],
@@ -126,4 +135,102 @@ exports.deleteRoom = ({ roomID = null }) => {
   }
   rooms.splice(roomIdx, 1);
   return { status: "success", message: "Room was deleted successfully" };
+};
+
+exports.updateRoundWinningSuit = ({ roomID = null, cardSuit = null }) => {
+  if (!roomID || !cardSuit) {
+    return { status: "fail", message: "Missing or invalid roomID" };
+  }
+  const roomIdx = rooms.findIndex((r) => r.roomID === roomID);
+  if (roomIdx === -1) {
+    return { status: "fail", message: "No room was found for the provided room id" };
+  }
+  rooms[roomIdx].roundWinningSuit = cardSuit;
+
+  return {
+    status: "success",
+    message: "Room suit updated successfully",
+    data: cardSuit,
+  };
+};
+
+exports.endRound = ({ roomID = null }) => {
+  if (!roomID) {
+    return { status: "fail", message: "Missing or invalid roomID" };
+  }
+  const roomIdx = rooms.findIndex((r) => r.roomID === roomID);
+  if (roomIdx === -1) {
+    return { status: "fail", message: "No room was found for the provided room id" };
+  }
+
+  const room = rooms[roomIdx];
+  const { gameFieldCards, roundWinningSuit, roomPlayers } = room;
+
+  // Determine the winning card
+  let winningCard = null;
+  let playerWinner = "";
+  let highestValue = -1;
+
+  gameFieldCards.forEach(({ playerSocket, card }) => {
+    const suit = card.slice(-1); // Get the suit (last character)
+    const value = parseInt(card.slice(0, -1)); // Get the card number
+
+    // Check if card is a Spade (trump suit) or matches the roundWinningSuit
+    const isTrump = suit === "S";
+    const isValidSuit = isTrump || suit === roundWinningSuit;
+
+    if (isValidSuit) {
+      // Spades always win over other suits
+      const cardRank = isTrump ? value + 100 : value; // Give Spades a higher rank
+      if (cardRank > highestValue) {
+        highestValue = cardRank;
+        winningCard = card;
+        playerWinner = playerSocket;
+      }
+    }
+  });
+
+  // Increment the winner's playerCurrentPoints
+  if (playerWinner) {
+    const winner = roomPlayers.find((player) => player.socketID === playerWinner);
+    if (winner) {
+      winner.playerCurrentPoints += 1;
+    }
+  }
+
+  room.lastRoundData = {
+    gameFieldCards: [...gameFieldCards],
+    playerWinner,
+    winningCard,
+  };
+
+  room.gameFieldCards = [];
+  room.roundWinningSuit = "I";
+
+  // Find current player with playerPlaying: true
+  const currentPlayerIdx = roomPlayers.findIndex((player) => player.playerPlaying === true);
+
+  // Set all players' playerPlaying to false
+  roomPlayers.forEach((player) => {
+    player.playerPlaying = false;
+  });
+
+  // Determine the next player to play
+  let nextPlayerIdx;
+  if (currentPlayerIdx === -1 || currentPlayerIdx === roomPlayers.length - 1) {
+    // If no player is currently playing or it's the last player, next is the first player
+    nextPlayerIdx = 0;
+  } else {
+    // Otherwise, next is the player after the current one
+    nextPlayerIdx = currentPlayerIdx + 1;
+  }
+
+  // Set the next player's playerPlaying to true
+  roomPlayers[nextPlayerIdx].playerPlaying = true;
+
+  return {
+    status: "success",
+    message: "Round ended successfully",
+    data: room,
+  };
 };

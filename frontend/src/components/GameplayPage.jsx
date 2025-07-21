@@ -8,6 +8,7 @@ import { useGlobal } from "./GlobalProvider";
 import PlayerCardsHand from "./PlayerCardsHand";
 import PlayersInfoPanel from "./PlayersInfoPanel";
 import ErrorPage from "./ErrorPage";
+import WinningScreen from "./WinningScreen";
 // import avatar2 from "../assets/7C.png";
 // import avatar3 from "../assets/12S.png";
 // import avatar4 from "../assets/11D.png";
@@ -20,9 +21,9 @@ const validStatuses = ["awaitingPlayers", "gameStarted", "initialPhase"];
 export default function GameplayPage({ socket }) {
   const { userData, setUserData } = useGlobal();
   const [settingsMenuOpen, setSettingsMenuOpen] = useState(false);
+  const [winningModalOpen, setWinningModalOpen] = useState(false);
 
   socket.on("waitPlayerTargetPoints", (receivedData) => {
-    // console.log("userData.gameStatus", receivedData);
     // const hasInvalidPlayerTarget = receivedData.data.roomPlayers.some(
     //   (p) => p.playerTarget === null || p.playerTarget === undefined
     // );
@@ -47,15 +48,34 @@ export default function GameplayPage({ socket }) {
   });
 
   socket.on("newCardPlayed", (receivedData) => {
-    console.log("dadadadada", receivedData);
     const me = receivedData.data.roomPlayers.find((p) => p.socketID === userData.socketID);
     setUserData((prev) => {
       return {
         ...prev,
+        roomPlayers: receivedData.data.roomPlayers,
         gameFieldCards: receivedData.data.gameFieldCards,
+        roundWinningSuit: receivedData.data.roundWinningSuit,
         amICurrentlyPlaying: me.playerPlaying,
       };
     });
+  });
+
+  socket.on("roundEnd", (receivedData) => {
+    console.log("ROUND ended ✅✅✅", receivedData.data);
+    const me = receivedData.data.roomPlayers.find((p) => p.socketID === userData.socketID);
+
+    setUserData((prev) => {
+      return {
+        ...prev,
+        roomPlayers: receivedData.data.roomPlayers,
+        gameFieldCards: receivedData.data.gameFieldCards,
+        roundWinningSuit: receivedData.data.roundWinningSuit,
+        lastRoundData: receivedData.data.lastRoundData,
+        amICurrentlyPlaying: me.playerPlaying,
+      };
+    });
+
+    setWinningModalOpen(true);
   });
 
   return (
@@ -64,6 +84,7 @@ export default function GameplayPage({ socket }) {
         <ErrorPage />
       ) : (
         <div className="gameplaypage">
+          {winningModalOpen && <WinningScreen userData={userData} setWinningModalOpen={setWinningModalOpen} />}
           <GameSettingsMenu settingsMenuOpen={settingsMenuOpen} setSettingsMenuOpen={setSettingsMenuOpen} />
           <div className="settings_btn_container">
             <button
@@ -77,10 +98,7 @@ export default function GameplayPage({ socket }) {
               {svgSelector({ svgName: "settings", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
             </button>
           </div>
-          <GameInfoBoard
-            playingPlayerData={userData.roomPlayers.find((p) => p.playerPlaying)}
-            roundWinningSuit={userData.roundWinningSuit}
-          />
+          <GameInfoBoard userData={userData} />
           <PlayersInfoPanel roomPlayers={userData.roomPlayers.filter((_, index) => index % 2 === 0)} />
           <GameplayArea userData={userData} />
           <PlayersInfoPanel roomPlayers={userData.roomPlayers.filter((_, index) => index % 2 !== 0)} />
