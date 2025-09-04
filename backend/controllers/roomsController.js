@@ -154,7 +154,7 @@ exports.updateRoundWinningSuit = ({ roomID = null, cardSuit = null }) => {
   };
 };
 
-exports.endRound = ({ roomID = null }) => {
+exports.endRound = ({ roomID = null, cardData }) => {
   if (!roomID) {
     return { status: "fail", message: "Missing or invalid roomID" };
   }
@@ -227,6 +227,12 @@ exports.endRound = ({ roomID = null }) => {
 
   // Set the next player's playerPlaying to true
   roomPlayers[nextPlayerIdx].playerPlaying = true;
+
+  const { playerSocket, card } = cardData;
+  const [cardValue, cardSuit] = [card.slice(0, -1), card.slice(-1)];
+  const formattedCard = `${cardSuit}_${cardValue}`;
+  const player = rooms[roomIdx].roomPlayers.find((p) => p.socketID === playerSocket);
+  player.playerCards = player.playerCards.filter((c) => c !== formattedCard);
 
   return {
     status: "success",

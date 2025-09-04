@@ -42,12 +42,17 @@ exports.playCard = (io, socket, data) => {
   const allPlayersNoCards = updatedRoomData.data.roomPlayers.every((player) => player.playerCards.length === 0);
 
   if (updatedRoomData.data.gameFieldCards.length === updatedRoomData.data.roomMaxPlayers) {
-    const endRoundData = endRound({ roomID: data.roomID });
+    const endRoundData = endRound({
+      roomID: data.roomID,
+      cardData: { playerSocket: data.socketID, card: data.cardData },
+    });
     if (allPlayersNoCards) {
-      io.to(player.socketID).emit("gameEnd", {
-        status: "success",
-        message: "Game ended",
-        data: null,
+      updatedRoomData.data.roomPlayers.forEach((player) => {
+        io.to(player.socketID).emit("gameEnd", {
+          status: "success",
+          message: "Game ended",
+          data: null,
+        });
       });
       return;
     }
