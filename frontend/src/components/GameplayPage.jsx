@@ -9,6 +9,7 @@ import PlayerCardsHand from "./PlayerCardsHand";
 import PlayersInfoPanel from "./PlayersInfoPanel";
 import ErrorPage from "./ErrorPage";
 import WinningScreen from "./WinningScreen";
+import GameWinModal from "./GameWinModal";
 // import avatar2 from "../assets/7C.png";
 // import avatar3 from "../assets/12S.png";
 // import avatar4 from "../assets/11D.png";
@@ -22,6 +23,7 @@ export default function GameplayPage({ socket }) {
   const { userData, setUserData } = useGlobal();
   const [settingsMenuOpen, setSettingsMenuOpen] = useState(false);
   const [winningModalOpen, setWinningModalOpen] = useState(false);
+  const [endGameModal, setEndGameModal] = useState(false);
 
   socket.on("waitPlayerTargetPoints", (receivedData) => {
     // const hasInvalidPlayerTarget = receivedData.data.roomPlayers.some(
@@ -80,6 +82,7 @@ export default function GameplayPage({ socket }) {
 
   socket.on("gameEnd", (receivedData) => {
     console.log("✅❤️✅👋", receivedData);
+    setEndGameModal(true);
   });
 
   return (
@@ -88,6 +91,7 @@ export default function GameplayPage({ socket }) {
         <ErrorPage />
       ) : (
         <div className="gameplaypage">
+          {endGameModal && <GameWinModal />}
           {winningModalOpen && <WinningScreen userData={userData} setWinningModalOpen={setWinningModalOpen} />}
           <GameSettingsMenu settingsMenuOpen={settingsMenuOpen} setSettingsMenuOpen={setSettingsMenuOpen} />
           <div className="settings_btn_container">
