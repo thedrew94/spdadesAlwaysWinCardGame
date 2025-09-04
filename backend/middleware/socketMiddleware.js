@@ -51,7 +51,7 @@ exports.playCard = (io, socket, data) => {
         io.to(player.socketID).emit("gameEnd", {
           status: "success",
           message: "Game ended",
-          data: null,
+          data: updatedRoomData,
         });
       });
       return;

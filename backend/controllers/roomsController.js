@@ -215,18 +215,9 @@ exports.endRound = ({ roomID = null, cardData }) => {
     player.playerPlaying = false;
   });
 
-  // Determine the next player to play
-  let nextPlayerIdx;
-  if (currentPlayerIdx === -1 || currentPlayerIdx === roomPlayers.length - 1) {
-    // If no player is currently playing or it's the last player, next is the first player
-    nextPlayerIdx = 0;
-  } else {
-    // Otherwise, next is the player after the current one
-    nextPlayerIdx = currentPlayerIdx + 1;
-  }
-
-  // Set the next player's playerPlaying to true
-  roomPlayers[nextPlayerIdx].playerPlaying = true;
+  // Set the playing player to the player who won the round
+  const winningPlayer = roomPlayers.findIndex((p) => p.socketID === playerWinner);
+  roomPlayers[winningPlayer].playerPlaying = true;
 
   const { playerSocket, card } = cardData;
   const [cardValue, cardSuit] = [card.slice(0, -1), card.slice(-1)];
