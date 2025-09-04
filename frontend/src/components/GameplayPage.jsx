@@ -52,6 +52,7 @@ export default function GameplayPage({ socket }) {
     setUserData((prev) => {
       return {
         ...prev,
+        playerCards: me.playerCards,
         roomPlayers: receivedData.data.roomPlayers,
         gameFieldCards: receivedData.data.gameFieldCards,
         roundWinningSuit: receivedData.data.roundWinningSuit,
@@ -61,12 +62,11 @@ export default function GameplayPage({ socket }) {
   });
 
   socket.on("roundEnd", (receivedData) => {
-    console.log("ROUND ended ✅✅✅", receivedData.data);
     const me = receivedData.data.roomPlayers.find((p) => p.socketID === userData.socketID);
-
     setUserData((prev) => {
       return {
         ...prev,
+        playerCards: me.playerCards,
         roomPlayers: receivedData.data.roomPlayers,
         gameFieldCards: receivedData.data.gameFieldCards,
         roundWinningSuit: receivedData.data.roundWinningSuit,
@@ -76,6 +76,10 @@ export default function GameplayPage({ socket }) {
     });
 
     setWinningModalOpen(true);
+  });
+
+  socket.on("gameEnd", (receivedData) => {
+    console.log("✅❤️✅👋", receivedData);
   });
 
   return (

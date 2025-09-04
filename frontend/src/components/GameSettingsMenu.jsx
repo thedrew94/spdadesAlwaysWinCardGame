@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { svgSelector } from "../utils/svgSelector";
 import { useGlobal } from "./GlobalProvider";
+import { config } from "../utils/config";
 
 export default function GameSettingsMenu({ settingsMenuOpen = false, setSettingsMenuOpen = () => {} }) {
   const { userData, setUserData } = useGlobal();
@@ -10,7 +11,7 @@ export default function GameSettingsMenu({ settingsMenuOpen = false, setSettings
 
   async function quitGame() {
     try {
-      await fetch("http://localhost:5175/api/room", {
+      await fetch(`${config.rootUrl}api/room`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useGlobal } from "./GlobalProvider";
 import AvatarSelection from "./AvatarSelection";
 import FastAccessButton from "./FastAccessButton";
+import { config } from "../utils/config";
 
 export default function PageJoinGame({ setPage = () => {} }) {
   const { userData, setUserData } = useGlobal();
@@ -17,7 +18,7 @@ export default function PageJoinGame({ setPage = () => {} }) {
   async function handleFormSubmit(e, roomID) {
     e.preventDefault();
     setPage(4);
-    const response = await fetch("http://localhost:5175/api/room", {
+    const response = await fetch(`${config.rootUrl}api/room`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -43,7 +44,7 @@ export default function PageJoinGame({ setPage = () => {} }) {
 
   useEffect(() => {
     async function fetchAvailableRooms() {
-      const fetchedData = await getFetch({ url: "http://localhost:5175/api/room" });
+      const fetchedData = await getFetch({ url: `${config.rootUrl}api/room` });
       setAvailableRooms(fetchedData.data);
     }
 

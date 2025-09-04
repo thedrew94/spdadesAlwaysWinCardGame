@@ -10,6 +10,7 @@ import PageWaitingForGame from "./PageWaitingForGame";
 import RoundInfo from "./RoundInfo";
 import { useNavigate } from "react-router-dom";
 import { useGlobal } from "./GlobalProvider";
+import RulesPage from "./RulesPage";
 
 export default function Homepage({ socket }) {
   const navigate = useNavigate();
@@ -35,9 +36,6 @@ export default function Homepage({ socket }) {
     <div className="homepage">
       <LanguageSelector />
       <RoundInfo />
-      {/* <button className="keycap_btn">
-                  <span className="keycap_btn_letter">OK</span>
-                </button> */}
       <div className="homepage_game_home">
         {page === 1 && <PageHome setPage={setPage} />}
         {page === 2 && <PageChooseGame setPage={setPage} />}
@@ -45,6 +43,7 @@ export default function Homepage({ socket }) {
         {page === 4 && <PageWaitingForGame setPage={setPage} />}
         {page === 5 && <PageJoinGame setPage={setPage} />}
         {page === 6 && <PageSupport setPage={setPage} />}
+        {page === 6 && <RulesPage setPage={setPage} />}
         <Copyright />
       </div>
     </div>

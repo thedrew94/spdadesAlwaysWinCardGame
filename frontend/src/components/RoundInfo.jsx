@@ -1,3 +1,5 @@
+import bg from "../assets/playing_card_256.png";
+
 export default function RoundInfo() {
   return (
     <div className="homepage_title">
@@ -6,7 +8,7 @@ export default function RoundInfo() {
         <span>pades</span>
         <span>always wins</span>
       </div>
-      <img src="./src/assets/playing_card_256.png" alt="" width="256px" height="256px" draggable="false" />
+      <img src={bg} alt="Main app logo bg" width="256px" height="256px" draggable="false" />
     </div>
   );
 }

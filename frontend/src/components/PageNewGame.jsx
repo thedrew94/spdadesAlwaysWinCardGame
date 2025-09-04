@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { svgSelector } from "../utils/svgSelector";
 import AvatarSelection from "./AvatarSelection";
 import { useGlobal } from "./GlobalProvider";
-import FastAccessButton from "./FastAccessButton";
+import { config } from "../utils/config";
 
 export default function PageNewGame({ socket, setPage = () => {} }) {
   const { setUserData } = useGlobal();
@@ -16,7 +16,7 @@ export default function PageNewGame({ socket, setPage = () => {} }) {
   async function handleFormSubmit(e) {
     e.preventDefault();
     setPage(4);
-    const response = await fetch("http://localhost:5175/api/newRoom", {
+    const response = await fetch(`${config.rootUrl}api/newRoom`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

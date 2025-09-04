@@ -10,11 +10,12 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import ConfigLayer from "./components/ConfigLayer";
+import { config } from "./utils/config";
 
 const Homepage = lazy(() => import("./components/Homepage"));
 const GameplayPage = lazy(() => import("./components/GameplayPage"));
 
-const socket = io.connect("http://localhost:5175", {
+const socket = io.connect(config.rootUrl, {
   reconnection: true,
   reconnectionAttempts: 3,
   reconnectionDelay: 3000,

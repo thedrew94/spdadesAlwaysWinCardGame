@@ -2,13 +2,14 @@ import { svgSelector } from "../utils/svgSelector";
 import FastAccessButton from "./FastAccessButton";
 import { useGlobal } from "./GlobalProvider";
 import Loader from "./Loader";
+import { config } from "../utils/config";
 
 export default function PageWaitingForGame({ setPage = () => {} }) {
   const { userData, setUserData } = useGlobal();
 
   async function quitGame() {
     try {
-      await fetch("http://localhost:5175/api/room", {
+      await fetch(`${config.rootUrl}api/room`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

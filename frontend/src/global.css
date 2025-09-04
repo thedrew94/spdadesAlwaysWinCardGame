@@ -77,9 +77,25 @@ html {
 }
 
 body {
-  min-height: 100vh;
-  background: radial-gradient(circle, #fcd685 0%, #fed483 25%, #fcc276 75%, #fab26e 100%);
-  background-color: #d2b48c;
+  min-height: 100dvh;
+  height: 100%;
+  margin: 0;
+  background: -webkit-radial-gradient(
+    circle at center,
+    rgb(252, 214, 133) 0%,
+    rgb(254, 212, 131) 25%,
+    rgb(252, 194, 118) 75%,
+    rgb(250, 178, 110) 100%
+  );
+  background: radial-gradient(
+    circle at center,
+    rgb(252, 214, 133) 0%,
+    rgb(254, 212, 131) 25%,
+    rgb(252, 194, 118) 75%,
+    rgb(250, 178, 110) 100%
+  );
+  background-color: #fcd685;
+  transform: translateZ(0);
   /* background-image: linear-gradient(rgba(139, 69, 19, 0.1) 1px, transparent 1px),
     linear-gradient(90deg, rgba(139, 69, 19, 0.1) 1px, transparent 1px),
     linear-gradient(rgba(139, 69, 19, 0.2) 2px, transparent 2px),
@@ -1214,14 +1230,8 @@ img:not([src]) {
   gap: 10px;
 }
 
-.rot_bg {
-}
-
 /* Tablets (portrait and landscape, typically 768px to 1024px) */
 @media screen and (min-width: 768px) and (max-width: 1024px) {
-  body {
-  }
-
   .homepage {
     gap: 150px;
   }
@@ -1269,10 +1279,6 @@ img:not([src]) {
 
 /* Phones (typically up to 767px) */
 @media screen and (max-width: 767px) {
-  /* Your phone-specific styles here */
-  body {
-  }
-
   .homepage {
     padding: 50px 0 0;
     gap: 10px;
