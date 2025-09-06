@@ -43,7 +43,7 @@ export default function Homepage({ socket }) {
         {page === 4 && <PageWaitingForGame setPage={setPage} />}
         {page === 5 && <PageJoinGame setPage={setPage} />}
         {page === 6 && <PageSupport setPage={setPage} />}
-        {page === 6 && <RulesPage setPage={setPage} />}
+        {page === 7 && <RulesPage setPage={setPage} />}
         <Copyright />
       </div>
     </div>

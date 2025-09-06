@@ -15,7 +15,15 @@ export default function PageHome({ setPage = () => {} }) {
           setPage(2);
         }}
       />
-      <FastAccessButton btnText={t("btn_rules")} btnSvg="rules" fastBtnText="2" fastBtnTrigger="2" cbFunc={() => {}} />
+      <FastAccessButton
+        btnText={t("btn_rules")}
+        btnSvg="rules"
+        fastBtnText="2"
+        fastBtnTrigger="2"
+        cbFunc={() => {
+          setPage(7);
+        }}
+      />
       <FastAccessButton
         btnText={t("btn_support")}
         btnSvg="love"

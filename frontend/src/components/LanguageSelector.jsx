@@ -8,9 +8,7 @@ export default function LanguageSelector() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const { i18n } = useTranslation();
-
   const activeLng = i18n.language;
-
   const currentLanguage = {
     lng: activeLng,
     lng_flag: activeLng === "it" ? italyFlag : activeLng === "jp" ? japanFlag : usaFlag,

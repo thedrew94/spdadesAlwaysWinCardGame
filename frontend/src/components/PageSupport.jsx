@@ -19,7 +19,9 @@ export default function PageSupport({ setPage = () => {} }) {
         btnSvg="linkedin"
         fastBtnText="3"
         fastBtnTrigger="3"
-        cbFunc={() => {}}
+        cbFunc={() => {
+          window.open("https://www.linkedin.com/in/laurentiu-andrei-tornyai-502655310/", "_blank");
+        }}
       />
       <FastAccessButton
         btnText={t("btn_back")}
