@@ -16,5 +16,15 @@
   "text_join_room_2": "Condividi il codice con i tuoi amici per giocare insieme",
   "text_join_room_3": "o aspetta che altre persone si uniscano alla stanza.",
   "text_copyright_1": "Questo gioco è stato creato con AMORE da",
-  "text_copyright_2": "Tornyai Laurentiu Andrei"
+  "text_copyright_2": "Tornyai Laurentiu Andrei",
+  "rules_1": "Ogni giocatore inizia con un set casuale di carte, con tutti i giocatori che ricevono lo stesso numero di carte.",
+  "rules_2": "All'inizio del gioco, ogni giocatore esamina le proprie carte e fa una previsione pubblica su quante mani vincerà entro la fine del gioco.",
+  "rules_3": "I giocatori giocano a turni, giocando una carta per round. La carta più alta, da 2 ad Asso (con l'Asso come carta più alta), vince il round e fa guadagnare al giocatore un punto.",
+  "rules_4": "Il giocatore che riesce a soddisfare esattamente la propria previsione di mani vinte entro la fine del gioco viene dichiarato vincitore. Ogni giocatore ha la possibilità di vincere o perdere.",
+  "rules_5": "I giocatori possono giocare solo una carta per turno.",
+  "rules_6": "I giocatori devono giocare una carta dello stesso seme della prima carta giocata nel round, se possibile.",
+  "rules_7": "Se un giocatore non ha carte del seme corrente, può giocare qualsiasi carta dalla sua mano.",
+  "rules_8": "Il giocatore che ha vinto il round precedente inizia il round successivo.",
+  "rules_9": "La carta più alta nel round vince, con le Picche come seme più alto (gli altri semi sono tutti uguali). Una carta di Picche batte sempre le carte di altri semi giocate nello stesso round.",
+  "rules_10": "In caso di più carte di Picche, vince la carta più alta."
 }
