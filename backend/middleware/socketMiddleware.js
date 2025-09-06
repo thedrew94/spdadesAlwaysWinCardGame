@@ -82,3 +82,7 @@ exports.playCard = (io, socket, data) => {
     });
   });
 };
+
+exports.handleDisconnection = (io, socket) => {
+  console.log("io", socket.id);
+};

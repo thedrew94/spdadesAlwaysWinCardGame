@@ -4,7 +4,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const http = require("http");
 const { Server } = require("socket.io");
-const { setPlayerTargetPoints, playCard } = require("./middleware/socketMiddleware");
+const { setPlayerTargetPoints, playCard, handleDisconnection } = require("./middleware/socketMiddleware");
 
 // Environment arguments
 const PORT = process.env.PORT || 5175;
@@ -71,7 +71,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    //
+    handleDisconnection(io, socket);
   });
 });
 

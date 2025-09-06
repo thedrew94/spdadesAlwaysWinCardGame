@@ -1,15 +1,18 @@
-import { Link, useNavigate } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 import FastAccessButton from "./FastAccessButton";
 
-export default function ErrorPage() {
+export default function ErrorPage({ errMsg }) {
   const navigate = useNavigate();
   return (
     <div className="error_page">
-      <div className="err_msg">
-        Sometimes unexpected
-        <br /> errors can occur...
-      </div>
+      {!errMsg && (
+        <div className="err_msg">
+          Sometimes unexpected
+          <br /> errors can occur...
+        </div>
+      )}
+
+      {errMsg && typeof errMsg === "string" && <div className="err_msg">{errMsg}</div>}
 
       {/* <div>currently playing player</div> */}
       <FastAccessButton
