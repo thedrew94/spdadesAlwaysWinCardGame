@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { config } from "../utils/config";
 import { svgSelector } from "../utils/svgSelector";
 import AvatarSelection from "./AvatarSelection";
 import { useGlobal } from "./GlobalProvider";
-import { config } from "../utils/config";
 
 export default function PageNewGame({ socket, setPage = () => {} }) {
   const { setUserData } = useGlobal();
-
   const [formData, setFormData] = useState({
     username: "",
     playerCount: 2,
     selectedAvatar: 1,
   });
+  const { t } = useTranslation();
 
   async function handleFormSubmit(e) {
     e.preventDefault();
@@ -65,7 +66,9 @@ export default function PageNewGame({ socket, setPage = () => {} }) {
         >
           {svgSelector({ svgName: "play", svgWidth: "28px", svgHeight: "28px", svgFill: "#3f200b" })}
         </button>
-        <span>{formData.playerCount} players</span>
+        <span>
+          {formData.playerCount} {t("placeholder_players")}
+        </span>
         <button
           type="button"
           onClick={() => {
@@ -83,7 +86,7 @@ export default function PageNewGame({ socket, setPage = () => {} }) {
           name="username"
           id="username"
           autoComplete="off"
-          placeholder="Player username"
+          placeholder={t("placeholder_username")}
           className="input_text_default"
           value={formData.username}
           onChange={(e) => {
@@ -102,7 +105,7 @@ export default function PageNewGame({ socket, setPage = () => {} }) {
           <span className="fast_game_btn_content">1</span>
         </button>
         <button type="submit" className="game_btn">
-          START GAME
+          {t("btn_start")}
           {svgSelector({ svgName: "play", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
         </button>
       </div>
@@ -113,7 +116,7 @@ export default function PageNewGame({ socket, setPage = () => {} }) {
           </span>
         </button>
         <button type="button" className="game_btn" onClick={() => setPage(2)}>
-          GO BACK
+          {t("btn_back")}
           {svgSelector({ svgName: "back", svgWidth: "28px", svgHeight: "28px", svgFill: "#f1dabb" })}
         </button>
       </div>

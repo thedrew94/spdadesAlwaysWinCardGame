@@ -1,13 +1,28 @@
+import { useTranslation } from "react-i18next";
 import FastAccessButton from "./FastAccessButton";
 
 export default function PageSupport({ setPage = () => {} }) {
+  const { t } = useTranslation();
+
   return (
     <div className="game_btns_home">
-      <FastAccessButton btnText="BUYME A COFFEE" btnSvg="coffee" fastBtnText="1" fastBtnTrigger="1" cbFunc={() => {}} />
-      <FastAccessButton btnText="PAYPAL" btnSvg="rules" fastBtnText="2" fastBtnTrigger="2" cbFunc={() => {}} />
-      <FastAccessButton btnText="FOLLOW ME" btnSvg="linkedin" fastBtnText="3" fastBtnTrigger="3" cbFunc={() => {}} />
       <FastAccessButton
-        btnText="GO BACK"
+        btnText={t("btn_coffee")}
+        btnSvg="coffee"
+        fastBtnText="1"
+        fastBtnTrigger="1"
+        cbFunc={() => {}}
+      />
+      <FastAccessButton btnText={t("btn_paypal")} btnSvg="rules" fastBtnText="2" fastBtnTrigger="2" cbFunc={() => {}} />
+      <FastAccessButton
+        btnText={t("btn_follow")}
+        btnSvg="linkedin"
+        fastBtnText="3"
+        fastBtnTrigger="3"
+        cbFunc={() => {}}
+      />
+      <FastAccessButton
+        btnText={t("btn_back")}
         btnSvg="back"
         fastBtnText="4"
         fastBtnTrigger="4"

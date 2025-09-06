@@ -3,9 +3,11 @@ import FastAccessButton from "./FastAccessButton";
 import { useGlobal } from "./GlobalProvider";
 import Loader from "./Loader";
 import { config } from "../utils/config";
+import { useTranslation } from "react-i18next";
 
 export default function PageWaitingForGame({ setPage = () => {} }) {
   const { userData, setUserData } = useGlobal();
+  const { t } = useTranslation();
 
   async function quitGame() {
     try {
@@ -35,12 +37,14 @@ export default function PageWaitingForGame({ setPage = () => {} }) {
           <button>{svgSelector({ svgName: "copy", svgWidth: "28px", svgHeight: "28px", svgFill: "#3f200b" })}</button>
         </div>
         <h6 className="game_code_text">
-          This is your game room code. <br />
-          Share the code with your friends to play together
-          <br /> or wait for other people to join the room.
+          {t("text_join_room_1")}
+          <br />
+          {t("text_join_room_2")}
+          <br />
+          {t("text_join_room_3")}
         </h6>
         <FastAccessButton
-          btnText="QUIT"
+          btnText={t("btn_quit")}
           btnSvg="back"
           fastBtnText="1"
           fastBtnTrigger="1"

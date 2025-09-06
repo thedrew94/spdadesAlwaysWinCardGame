@@ -1,0 +1,20 @@
+{
+  "btn_play": "PLAY",
+  "btn_rules": "RULES",
+  "btn_support": "SUPPORT",
+  "btn_new_game": "NEW GAME",
+  "btn_join_game": "JOIN GAME",
+  "btn_back": "GO BACK",
+  "btn_quit": "QUIT",
+  "btn_start": "START GAME",
+  "btn_coffee": "BUYME A COFFEE",
+  "btn_paypal": "PAYPAL",
+  "btn_follow": "FOLLOW ME",
+  "placeholder_players": "players",
+  "placeholder_username": "Player username",
+  "text_join_room_1": "This is your game room code.",
+  "text_join_room_2": "Share the code with your friends to play together",
+  "text_join_room_3": "or wait for other people to join the room.",
+  "text_copyright_1": "This game was made with LOVE by",
+  "text_copyright_2": "Tornyai Laurentiu Andrei"
+}

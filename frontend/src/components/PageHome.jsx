@@ -1,10 +1,13 @@
+import { useTranslation } from "react-i18next";
 import FastAccessButton from "./FastAccessButton";
 
 export default function PageHome({ setPage = () => {} }) {
+  const { t } = useTranslation();
+
   return (
     <div className="game_btns_home">
       <FastAccessButton
-        btnText="PLAY"
+        btnText={t("btn_play")}
         btnSvg="play"
         fastBtnText="1"
         fastBtnTrigger="1"
@@ -12,9 +15,9 @@ export default function PageHome({ setPage = () => {} }) {
           setPage(2);
         }}
       />
-      <FastAccessButton btnText="RULES" btnSvg="rules" fastBtnText="2" fastBtnTrigger="2" cbFunc={() => {}} />
+      <FastAccessButton btnText={t("btn_rules")} btnSvg="rules" fastBtnText="2" fastBtnTrigger="2" cbFunc={() => {}} />
       <FastAccessButton
-        btnText="SUPPORT"
+        btnText={t("btn_support")}
         btnSvg="love"
         fastBtnText="3"
         fastBtnTrigger="3"

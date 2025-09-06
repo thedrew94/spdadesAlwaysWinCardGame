@@ -6,6 +6,7 @@ import { useGlobal } from "./GlobalProvider";
 import AvatarSelection from "./AvatarSelection";
 import FastAccessButton from "./FastAccessButton";
 import { config } from "../utils/config";
+import { useTranslation } from "react-i18next";
 
 export default function PageJoinGame({ setPage = () => {} }) {
   const { userData, setUserData } = useGlobal();
@@ -14,6 +15,7 @@ export default function PageJoinGame({ setPage = () => {} }) {
     username: "",
     selectedAvatar: 1,
   });
+  const { t } = useTranslation();
 
   async function handleFormSubmit(e, roomID) {
     e.preventDefault();
@@ -65,7 +67,7 @@ export default function PageJoinGame({ setPage = () => {} }) {
             name="username"
             id="username"
             autoComplete="off"
-            placeholder="Player username"
+            placeholder={t("placeholder_username")}
             className="input_text_default"
             value={formData.username}
             onChange={(e) => {
@@ -97,7 +99,7 @@ export default function PageJoinGame({ setPage = () => {} }) {
             })}
         </ul>
         <FastAccessButton
-          btnText="GO BACK"
+          btnText={t("btn_back")}
           btnSvg="back"
           fastBtnText="1"
           fastBtnTrigger="1"

@@ -1,0 +1,20 @@
+{
+  "btn_play": "GIOCA",
+  "btn_rules": "REGOLE",
+  "btn_support": "SUPPORTO",
+  "btn_new_game": "NUOVA PARTITA",
+  "btn_join_game": "UNISCITI ALLA PARTITA",
+  "btn_back": "INDIETRO",
+  "btn_quit": "ESCI",
+  "btn_start": "INIZIA",
+  "btn_coffee": "OFFRIMI UN CAFFÈ",
+  "btn_paypal": "PayPal",
+  "btn_follow": "SEGUIMI",
+  "placeholder_players": "giocatori",
+  "placeholder_username": "Nome utente del giocatore",
+  "text_join_room_1": "Questo è il codice della tua stanza di gioco.",
+  "text_join_room_2": "Condividi il codice con i tuoi amici per giocare insieme",
+  "text_join_room_3": "o aspetta che altre persone si uniscano alla stanza.",
+  "text_copyright_1": "Questo gioco è stato creato con AMORE da",
+  "text_copyright_2": "Tornyai Laurentiu Andrei"
+}

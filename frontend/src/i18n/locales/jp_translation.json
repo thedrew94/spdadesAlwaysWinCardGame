@@ -1,0 +1,20 @@
+{
+  "btn_play": "プレイ",
+  "btn_rules": "ルール",
+  "btn_support": "サポート",
+  "btn_new_game": "新ゲーム",
+  "btn_join_game": "ゲームに参加",
+  "btn_back": "戻る",
+  "btn_quit": "終了",
+  "btn_start": "ゲーム開始",
+  "btn_coffee": "コーヒーをおごる",
+  "btn_paypal": "PayPal",
+  "btn_follow": "フォローする",
+  "placeholder_players": "プレイヤー",
+  "placeholder_username": "プレイヤーのユーザー名",
+  "text_join_room_1": "これはあなたのゲームルームのコードです。",
+  "text_join_room_2": "友達と一緒にプレイするためにこのコードを共有してください。",
+  "text_join_room_3": "または、他の人がルームに参加するのを待ってください。",
+  "text_copyright_1": "このゲームは愛を込めて作られました",
+  "text_copyright_2": "Tornyai Laurentiu Andrei"
+}
