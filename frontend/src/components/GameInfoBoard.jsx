@@ -46,20 +46,25 @@ export default function GameInfoBoard({ userData }) {
         </div>
       </div>
       <div className="currently_playing">
-        <div className="player_panel_img">
-          <img
-            src={playingPlayerData ? avatarsCollections[playingPlayerData.playerAvatar] || "" : ""}
-            alt=""
-            width="100%"
-            height="100%"
-            draggable="false"
-          />
+        <div className="currently_playing_loader" style={{ "--loader-percentage": "60%" }}>
+          <div className="currently_playing_loader_inner"></div>
         </div>
-        <div>
-          <h6 className="curr_play_header">Currently playing...</h6>
-          <h6 className="curr_play_name">
-            {playingPlayerData ? playingPlayerData.playerUsername || "undefined_name" : "undefined_name"}
-          </h6>
+        <div style={{ display: "flex", gap: "10px" }}>
+          <div className="player_panel_img">
+            <img
+              src={playingPlayerData ? avatarsCollections[playingPlayerData.playerAvatar] || "" : ""}
+              alt=""
+              width="100%"
+              height="100%"
+              draggable="false"
+            />
+          </div>
+          <div>
+            <h6 className="curr_play_header">Currently playing...</h6>
+            <h6 className="curr_play_name">
+              {playingPlayerData ? playingPlayerData.playerUsername || "undefined_name" : "undefined_name"}
+            </h6>
+          </div>
         </div>
       </div>
     </div>

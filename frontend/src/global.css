@@ -563,6 +563,7 @@ img:not([src]) {
   letter-spacing: 0.12em;
   color: #3f200b;
   user-select: none;
+  transition: all 0.25s;
   animation: renderInBtn 0.2s ease-in forwards;
 }
 
@@ -570,6 +571,17 @@ img:not([src]) {
   min-width: 28px;
   width: 28px;
   height: 28px;
+}
+
+.error_msg {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 10px;
+  font-family: "Jua", sans-serif;
+  font-size: 1.8rem;
+  line-height: 1.8rem;
+  color: #a32222;
 }
 
 .input_text_default {
@@ -583,6 +595,12 @@ img:not([src]) {
   background-color: transparent;
   border: none;
   outline: none;
+}
+
+.input_error {
+  border: 3px solid #851818;
+  border-bottom: 6px solid #851818;
+  box-shadow: 0 10px 20px rgb(163, 34, 34, 0.3), inset 0 -5px 10px rgb(163, 34, 34, 0.25);
 }
 
 .input_players {
@@ -1166,12 +1184,47 @@ img:not([src]) {
 
 .currently_playing {
   display: flex;
+  flex-direction: column;
+  gap: 2.5px;
   justify-content: center;
   align-items: center;
   gap: 10px;
   min-width: 370px;
   width: 370px;
   max-width: 370px;
+}
+
+.currently_playing_loader {
+  --loader-percentage: 100%;
+  --loader-color: #3e9623;
+  position: relative;
+  width: 100%;
+  min-height: 18px;
+  max-height: 18px;
+  height: 18px;
+  border-radius: 5px;
+  border: 1px solid #212121;
+  background-color: #3f200b;
+}
+
+.currently_playing_loader_inner {
+  position: absolute;
+  content: "";
+  top: 50%;
+  left: 3.5px;
+  width: calc(100% - 7px);
+  height: 10px;
+  border-radius: 3px;
+  transform: translate(0, -50%);
+  background-color: #3e9623;
+  transition: all 0.25s;
+  animation: time 10s linear forwards;
+}
+
+@keyframes time {
+  to {
+    width: calc(3% - 7px);
+  }
 }
 
 .game_settings_outter {

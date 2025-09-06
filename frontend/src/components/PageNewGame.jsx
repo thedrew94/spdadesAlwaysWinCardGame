@@ -8,7 +8,7 @@ import { useGlobal } from "./GlobalProvider";
 export default function PageNewGame({ socket, setPage = () => {} }) {
   const { setUserData } = useGlobal();
   const [formData, setFormData] = useState({
-    username: "",
+    username: { status: "default", value: "" },
     playerCount: 2,
     selectedAvatar: 1,
   });
@@ -16,13 +16,19 @@ export default function PageNewGame({ socket, setPage = () => {} }) {
 
   async function handleFormSubmit(e) {
     e.preventDefault();
+    if (formData.username.status !== "correct") {
+      setFormData((prevState) => {
+        return { ...prevState, username: { status: "error", value: prevState.username.value } };
+      });
+      return;
+    }
     setPage(4);
     const response = await fetch(`${config.rootUrl}api/newRoom`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ ...formData, socketID: socket.id }),
+      body: JSON.stringify({ ...formData, username: formData.username.value, socketID: socket.id }),
       credentials: "include",
     });
 
@@ -80,7 +86,7 @@ export default function PageNewGame({ socket, setPage = () => {} }) {
           {svgSelector({ svgName: "play", svgWidth: "28px", svgHeight: "28px", svgFill: "#3f200b" })}
         </button>
       </fieldset>
-      <fieldset className="input_username">
+      <fieldset className={`input_username ${formData.username.status === "error" && "input_error"}`}>
         <input
           type="text"
           name="username"
@@ -88,15 +94,27 @@ export default function PageNewGame({ socket, setPage = () => {} }) {
           autoComplete="off"
           placeholder={t("placeholder_username")}
           className="input_text_default"
-          value={formData.username}
+          value={formData.username.value}
           onChange={(e) => {
+            const isValid = e.target.value.length > 3;
             setFormData((curr) => {
-              return { ...curr, username: e.target.value };
+              return { ...curr, username: { status: isValid ? "correct" : "error", value: e.target.value } };
             });
           }}
         />
-        {svgSelector({ svgName: "pen", svgWidth: "28px", svgHeight: "28px", svgFill: "#3f200b" })}
+        {svgSelector({
+          svgName: "pen",
+          svgWidth: "28px",
+          svgHeight: "28px",
+          svgFill: formData.username.status === "error" ? "#851818" : "#3f200b",
+        })}
       </fieldset>
+      {formData.username.status === "error" && (
+        <div className="error_msg">
+          {svgSelector({ svgName: "error", svgWidth: "22px", svgHeight: "22px", svgFill: "#851818" })}Please provide a
+          valid username
+        </div>
+      )}
 
       <AvatarSelection formData={formData} setFormData={setFormData} />
 
